@@ -1,0 +1,113 @@
+/* Reset some basic styles */
+body, h1, h2, h3, p, ul {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: #f4f6f9;
+  color: #333;
+  line-height: 1.6;
+}
+
+/* Navbar styles */
+.navbar {
+  background-color: #2d3e50;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navbar .logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #fff;
+}
+
+.navbar .nav-links {
+  list-style: none;
+  display: flex;
+  gap: 1.2rem;
+}
+
+.navbar .nav-links li a {
+  text-decoration: none;
+  color: #fff;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.navbar .nav-links li a:hover,
+.navbar .nav-links .logout-btn:hover {
+  color: #00b894;
+}
+
+.logout-btn {
+  color: #ff7675;
+}
+
+/* Main dashboard area */
+.dashboard {
+  max-width: 1000px;
+  margin: 2rem auto;
+  padding: 1rem;
+}
+
+.dashboard h2 {
+  margin-bottom: 1.5rem;
+  font-size: 2rem;
+  color: #2d3436;
+}
+
+/* Order card styles */
+.order-card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  transition: transform 0.2s ease;
+}
+
+.order-card:hover {
+  transform: translateY(-3px);
+}
+
+.order-card h3 {
+  font-size: 1.25rem;
+  color: #0984e3;
+  margin-bottom: 0.5rem;
+}
+
+.order-card p {
+  margin: 0.25rem 0;
+}
+
+.order-card ul {
+  margin-top: 1rem;
+  padding-left: 1.5rem;
+}
+
+.order-card li {
+  margin-bottom: 0.5rem;
+}
+
+/* Button style */
+.complete-btn {
+  margin-top: 1rem;
+  background: #00b894;
+  color: #fff;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background 0.3s ease;
+}
+
+.complete-btn:hover {
+  background: #019870;
+}

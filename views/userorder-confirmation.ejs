@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Your Orders</title>
+  <link rel="stylesheet" href="/css/userorder-confirmation.css">
+</head>
+<body>
+  <main class="orders-container">
+    <h1>Your Orders 📦</h1>
+  
+    <% if (orders.length === 0) { %>
+      <p>No orders placed yet.</p>
+    <% } else { %>
+      <% orders.forEach(order => { %>
+        <div class="order-card">
+          <!-- <h2>Order ID: <%= order._id %></h2> -->
+          <p><strong>Placed on:</strong> <%= new Date(order.createdAt).toLocaleString() %></p>
+  
+          <% order.completedVendors.forEach(vendor => { %>
+            <div class="vendor-block">
+              <h3>Status: ✅ <%= vendor.status %></h3>
+              <p><strong>Completed At:</strong> <%= new Date(vendor.completedAt).toLocaleString() %></p>
+  
+              <div class="items-grid">
+                <% vendor.items.forEach(item => { %>
+                  <div class="item-card">
+                    <img src="<%= item.image %>" alt="<%= item.name %> image" class="item-img"/>
+                    <div class="item-info">
+                      <h4><%= item.name %></h4>
+                      <p><%= item.description %></p>
+                      <p><strong>₹<%= item.price %></strong> × <%= item.quantity %> = ₹<%= item.total %></p>
+                    </div>
+                  </div>
+                <% }); %>
+              </div>
+            </div>
+          <% }); %>
+        </div>
+      <% }); %>
+    <% } %>
+  </main>
+  <a href="/">back to home</a>
+</body>
+</html>
+
+

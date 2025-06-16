@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Wishlist - ATHLETEX</title>
+    <link rel="stylesheet" href="/css/wishlist.css">
+</head>
+<body>
+    <h1>Your Wishlist</h1>
+    <% if (message) { %>
+        <p><%= message %></p>
+    <% } else { %>
+        <div id="wishlist">
+            <% wishlistItems.forEach(item => { %>
+                <div class="wishlist-item">
+                    <img src="<%= item.image %>" alt="<%= item.name %>">
+                    <h3><%= item.name %></h3>
+                    <p><%= item.details %></p>
+                    <p>Price: $<%= item.price %> | Discount: <%= item.discount %>%</p>
+                    <button class="add-to-cart" data-productid="<%= item.productId %>">Move to Cart</button>
+                    <button class="remove-from-wishlist" data-productid="<%= item.productId %>">Remove</button>
+                </div>
+            <% }) %>
+        </div>
+    <% } %>
+    <a href="/">Continue Shopping</a>
+    <script src="../static/wishlist.js"></script>
+</body>
+</html>

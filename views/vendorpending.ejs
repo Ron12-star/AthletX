@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Pending Orders</title>
+  <link rel="stylesheet" href="/css/vendor.css"/>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="logo">ATHLETEX</div>
+    <ul class="nav-links">
+      <li><a href="/vendor-dashboard">Home</a></li>
+      <li><a href="/vendors/products">Products</a></li>
+      <li><a href="/vendors/orders">Orders</a></li>
+      <li><a href="/vendors/orders/completed">Completed</a></li>
+      <li><a href="/logout" class="logout-btn">Logout</a></li>
+    </ul>
+  </nav>
+
+  <main class="dashboard">
+    <h2>Pending Orders</h2>
+
+    <% if (!orders || orders.length === 0) { %>
+      <p>No pending orders available.</p>
+    <% } %>
+
+    <% orders.forEach(order => { %>
+      <div class="order-card">
+        <h3>Customer: <%= order.name %></h3>
+        <p><strong>Phone:</strong> <%= order.phone %></p>
+        <p><strong>Address:</strong> <%= order.address %></p>
+        <p><strong>Payment:</strong> <%= order.paymentMethod.toUpperCase() %></p>
+        <p><strong>Placed At:</strong> <%= new Date(order.createdAt).toLocaleString() %></p>
+
+        <ul>
+          <% order.items.forEach(item => { %>
+            <% if (item.vendorId && item.vendorId.toString() === vendorId.toString()) { %>
+              <li>
+                🛍️ <strong><%= item.name %></strong> — ₹<%= item.price %> x <%= item.quantity %>
+              </li>
+            <% } %>
+          <% }) %>
+        </ul>
+
+        <form action="/vendor-dashboard/orders/vendorcomplete" method="POST">
+          <input type="hidden" name="orderId" value="<%= order._id %>" />
+          <button type="submit" class="complete-btn">✅ Mark as Completed</button>
+        </form>
+        
+      </div>
+    <% }) %>
+  </main>
+</body>
+</html>

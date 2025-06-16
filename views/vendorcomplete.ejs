@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Completed Orders</title>
+  <link rel="stylesheet" href="/css/vendor.css"/>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="logo">ATHLETEX</div>
+    <ul class="nav-links">
+      <li><a href="/vendor-dashboard">Home</a></li>
+      <li><a href="/vendors/products">Products</a></li>
+      <li><a href="/vendors/orders">Pending Orders</a></li>
+      <li><a href="/vendors/orders/completed">Completed</a></li>
+      <li><a href="/logout" class="logout-btn">Logout</a></li>
+    </ul>
+  </nav>
+
+  <main class="dashboard">
+    <h2>✅ Completed Orders</h2>
+
+    <% if (!orders || orders.length === 0) { %>
+      <p>No completed orders yet.</p>
+    <% } %>
+
+    <% orders.forEach(order => { %>
+      <div class="order-card completed">
+        <h3>Customer: <%= order.name %></h3>
+        <p><strong>Total (your items):</strong> ₹
+          <%= order.items
+                .filter(item => item.vendorId?.toString() === vendorId.toString())
+                .reduce((sum, item) => sum + item.price * item.quantity, 0) %>
+        </p>
+        <p><strong>Completed On:</strong> <%= order.completedAt ? new Date(order.completedAt).toLocaleString() : "N/A" %></p>
+
+        <ul>
+          <% order.items.forEach(item => { %>
+            <% if (item.vendorId?.toString() === vendorId.toString()) { %>
+              <li>
+                🛍️ <strong><%= item.name %></strong> — ₹<%= item.price %> x <%= item.quantity %>
+              </li>
+            <% } %>
+          <% }) %>
+        </ul>
+      </div>
+    <% }) %>
+
+    <div class="back-link">
+      <a href="/vendor-dashboard" id="returntodashboard">← Return to Dashboard</a>
+    </div>
+  </main>
+</body>
+</html>

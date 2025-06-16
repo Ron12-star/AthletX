@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Order Pending</title>
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+  <main class="container">
+    <h2>✅ Order Successfully Placed!</h2>
+<p><strong>Name:</strong> <%= order.name %></p>
+<p><strong>Address:</strong> <%= order.address %></p>
+<p><strong>Total Amount:</strong> ₹<%= order.totalAmount %></p>
+<p><strong>Payment Method:</strong> <%= order.paymentMethod %></p>
+
+<a href="/">⬅️ Back to Home</a>
+
+  </main>
+</body>
+</html>

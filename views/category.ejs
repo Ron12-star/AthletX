@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <<title><%= isSearchPage ? "Search Results" : categoryName + " Collection" %></title>
+
+  <link rel="stylesheet" href="/css/category.css" />
+</head>
+
+<body>
+  <header>
+    <h2><%= categoryName %> Collection</h2>
+  </header>
+
+  <div class="container">
+    <aside class="filters">
+      <h2>FILTERS</h2>
+
+      <!-- Price Filter -->
+      <label for="min-price">Price</label>
+      <div class="price-range-container">
+        <div class="price-input-wrapper">
+          <input type="number" id="min-price" class="price-input" value="100" min="100" max="<%= maxPrice %>" step="50" />
+          <input type="range" id="price-min" class="price-slider" min="100" max="<%= maxPrice %>" step="50" value="100" />
+        </div>
+        <span class="price-separator">To</span>
+        <div class="price-input-wrapper">
+          <input type="number" id="max-price" class="price-input" value="<%= maxPrice %>" min="100" max="<%= maxPrice %>" step="50" />
+          <input type="range" id="price-max" class="price-slider" min="100" max="<%= maxPrice %>" step="<%= maxPrice % 50 === 0 ? 50 : 1 %>" value="<%= maxPrice %>" />
+        </div>
+      </div>
+
+      <!-- Subcategory Filter -->
+      <h3>Category</h3>
+      <input type="text" id="subcategorySearch" placeholder="Search...">
+      <div id="subcategoryList">
+        <% if (subcategories.length > 0) { %>
+          <% subcategories.filter(subcategory => subcategory && subcategory.trim() !== "").forEach(subcategory => { %>
+            <label>
+              <input type="checkbox" name="subcategory" value="<%= subcategory %>">
+              <%= subcategory %>
+            </label>
+          <% }); %>
+        <% } else { %>
+          <p>No subcategories available</p>
+        <% } %>
+      </div>
+    </aside>
+
+    <main class="products">
+      <h2>🔥 Bestsellers in <%= categoryName %> 🔥</h2>
+      <div class="product-grid" id="bestseller-products">
+        <% if (bestsellerProducts.length > 0) { %>
+          <% bestsellerProducts.forEach(product => { %>
+            <div class="product-card bestseller">
+              <img src="<%= product.image %>" alt="<%= product.name %>" />
+              <h3><%= product.name %></h3>
+              <p><%= product.details %></p>
+              <p class="price">₹ <%= product.price %></p>
+              <% if (product.discount > 0) { %>
+                <span class="discount"><%= product.discount %>% Off</span>
+              <% } %>
+              <button class="add-to-cart" data-productid="<%= product._id %>">ADD TO CART</button>
+            </div>
+          <% }) %>
+        <% } else { %>
+          <p class="no-products">No bestseller products available in this category.</p>
+        <% } %>
+      </div>
+
+      <h2>All products in <%= categoryName %></h2>
+      <div class="product-grid" id="all-products">
+        <% if (products.length > 0) { %>
+          <% products.forEach(product => { %>
+            <div class="product-card">
+              <img src="<%= product.image %>" alt="<%= product.name %>" />
+              <h3><%= product.name %></h3>
+              <p><%= product.details %></p>
+              <p class="price">₹ <%= product.price %></p>
+              <% if (product.discount > 0) { %>
+                <span class="discount"><%= product.discount %>% Off</span>
+              <% } %>
+              <button class="add-to-cart" data-productid="<%= product._id %>">ADD TO CART</button>
+            </div>
+          <% }) %>
+        <% } else { %>
+          <p class="no-products">No products available in this category.</p>
+        <% } %>
+      </div>
+    </main>
+    <a href="/" class="continue-shopping-btn">Continue Shopping</a>
+  </div>
+
+ 
+  <script src="/static/category.js"></script>
+</body>
+</html>

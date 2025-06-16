@@ -1,0 +1,462 @@
+/* styles.css */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f9f9f9;
+}
+.container {
+  display: flex;
+  max-width: 1200px;
+  margin: auto;
+  padding: 20px;
+  padding-bottom: 100px;
+}
+
+.products {
+  width: 75%;
+  margin-left: 5%;
+}
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  justify-content: center;
+  /* border: #000 solid 5px; */
+}
+.product-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;  /* Ensures button stays inside */
+  align-items: center;
+  text-align: center;
+  border: 2px solid black;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+  max-width: 400px;
+  min-height: 100px; /* Adjust height so all content fits */
+  overflow: hidden; /* Prevents button from going outside */
+}
+
+.product-card img {
+  max-width: 100%;
+  height: auto;
+}
+
+.product-card h3 {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.product-card p {
+  font-size: 14px;
+  margin: 5px 0;
+}
+
+.product-card .price {
+  font-size: 18px;
+  font-weight: bold;
+  color: black;
+}
+
+.product-card button {
+  background-color: black;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  font-size: 14px;
+  cursor: pointer;
+  width: 100%;
+  margin-top: auto;  /* Push button to bottom */
+  border-radius: 5px;
+}
+
+.product-card button:hover {
+  background-color: #333;
+}
+#selected-price {
+  font-weight: bold;
+  color: #ff6600;
+  transition: 0.3s ease-in-out;
+}
+
+/* Base styles for the filter aside */
+.filters {
+  width: 280px; /* Adjust as needed */
+  padding: 25px;
+  background-color: #f8f9fa; /* Light grey background */
+  border: 1px solid #e9ecef; /* Light border */
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.filters h2 {
+  font-size: 1.75rem;
+  margin-top: 0;
+  margin-bottom: 20px;
+  color: #343a40; /* Dark grey heading text */
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.filters label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: #495057; /* Slightly darker label text */
+}
+
+/* Price Range Container */
+/* Price Range Container */
+.price-range-container {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* Space between the two input sets */
+  margin-bottom: 20px;
+}
+
+.price-input-wrapper {
+  display: flex;
+  flex-direction: column; /* Stack number input above slider */
+  align-items: center; /* Center them horizontally */
+}
+
+.price-input {
+  width: 70px; /* Adjust as needed */
+  padding: 8px 10px;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  margin-bottom: 5px; /* Space between number input and slider */
+  /* -moz-appearance: textfield; Remove spinner buttons in Firefox */
+}
+
+.price-input::-webkit-outer-spin-button,
+.price-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.price-slider {
+  width: 100%; /* Make slider take full width of its wrapper */
+  -webkit-appearance: none;
+  appearance: none;
+  background: #dee2e6; /* Light grey track */
+  height: 6px;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.price-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  background: #007bff; /* Primary blue thumb */
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.price-slider::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  background: #007bff; /* Primary blue thumb */
+  border-radius: 50%;
+  cursor: pointer;
+  border: none;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.price-slider::-webkit-slider-thumb:hover,
+.price-slider::-moz-range-thumb:hover {
+  background-color: #0056b3; /* Darker blue on hover */
+}
+
+.price-separator {
+  font-size: 0.9rem;
+  color: #6c757d; /* Medium grey "To" text */
+}
+
+/* Category Section */
+.filters h3 {
+  font-size: 1.25rem;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  color: #343a40;
+}
+
+#category-search {
+  width: calc(100% - 16px);
+  padding: 8px;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  margin-bottom: 10px;
+  transition: border-color 0.2s ease-in-out;
+}
+
+#category-search:focus {
+  outline: none;
+  border-color: #007bff; /* Primary blue focus border */
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+#category-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  max-height: 200px; /* Optional: for scrollable list */
+  overflow-y: auto; /* Optional: for scrollable list */
+}
+
+#category-list li {
+  padding: 6px 0;
+}
+
+#category-list li input[type="checkbox"] {
+  margin-right: 8px;
+  vertical-align: middle;
+}
+
+#category-list li label {
+  display: inline-block;
+  margin-bottom: 0;
+  font-weight: normal;
+  color: #495057;
+  vertical-align: middle;
+  cursor: pointer;
+}
+
+/* Advanced Enhancements */
+
+/* Hover effect on the filter aside */
+.filters:hover {
+  border-color: #adb5bd;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+/* Style for checked checkboxes */
+#category-list li input[type="checkbox"]:checked + label {
+  font-weight: 500;
+  color: #007bff;
+}
+
+/* Smooth scrolling for the category list (if enabled) */
+#category-list::-webkit-scrollbar {
+  width: 8px;
+}
+
+#category-list::-webkit-scrollbar-track {
+  background: #f1f3f5;
+  border-radius: 4px;
+}
+
+#category-list::-webkit-scrollbar-thumb {
+  background: #ced4da;
+  border-radius: 4px;
+}
+
+#category-list::-webkit-scrollbar-thumb:hover {
+  background: #adb5bd;
+}
+
+/* Responsive adjustments (example for smaller screens) */
+@media (max-width: 768px) {
+  .filters {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+}
+
+
+/* Bestseller Section */
+.bestseller-section {
+  width: 100%;
+  margin-bottom: 30px;
+  padding: 20px;
+  background: linear-gradient(135deg, #ff9f1a, #ff3e3e);
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.bestseller-section h2 {
+  color: white;
+  text-align: center;
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+/* Bestseller Grid */
+.bestseller-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  justify-content: center;
+}
+
+/* Bestseller Product Card */
+.bestseller-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
+  border: 2px solid black;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+  max-width: 400px;
+  min-height: 100px;
+  overflow: hidden;
+  position: relative; /* For bestseller badge */
+  background: white;
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+/* Hover Effect */
+.bestseller-card:hover {
+  transform: scale(1.05);
+  box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Bestseller Badge */
+.bestseller-card::before {
+  content: "🔥 Bestseller";
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: #ff3e3e;
+  color: white;
+  padding: 5px 10px;
+  font-size: 12px;
+  font-weight: bold;
+  border-radius: 5px;
+}
+
+/* Image Styling */
+.bestseller-card img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 5px;
+}
+
+/* Product Title */
+.bestseller-card h3 {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+/* Product Description */
+.bestseller-card p {
+  font-size: 14px;
+  margin: 5px 0;
+}
+
+/* Price */
+.bestseller-card .price {
+  font-size: 18px;
+  font-weight: bold;
+  color: black;
+}
+
+/* Discount Badge */
+.bestseller-card .discount {
+  background: #ff9f1a;
+  color: white;
+  font-size: 12px;
+  padding: 5px 8px;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  border-radius: 5px;
+}
+
+/* Add to Cart Button */
+.bestseller-card button {
+  background-color: black;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  font-size: 14px;
+  cursor: pointer;
+  width: 100%;
+  margin-top: auto;
+  border-radius: 5px;
+  transition: background 0.3s ease-in-out;
+}
+
+.bestseller-card button:hover {
+  background-color: #333;
+}
+
+.continue-shopping-btn {
+  display: block;
+  width: fit-content;
+  margin: 20px auto; /* Centers the button */
+  padding: 12px 24px;
+  background-color: #000; /* Black background */
+  color: #fff; /* White text */
+  font-size: 16px;
+  font-weight: bold;
+  border: 2px solid #000;
+  border-radius: 25px; /* Rounded button */
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none; /* Remove underline */
+  transition: all 0.3s ease-in-out;
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000; /* Ensure it stays above other elements */
+}
+
+/* Button hover effect */
+.continue-shopping-btn:hover {
+  background-color: #ff5722;
+  border-color: #ff5722;
+  color: #fff;
+  transform: translateX(-50%) scale(1.05);
+}
+
+
+
+/* Fixed size for filter panel */
+.subcategory-list {
+  max-height: 200px; /* Set max height */
+  overflow-y: auto;  /* Enable scrolling */
+  border: 1px solid #ccc; 
+  padding: 5px;
+  border-radius: 5px;
+}
+
+/* Style for search input and button */
+.search-container {
+  display: flex;
+  gap: 5px;
+  margin-bottom: 10px;
+}
+
+#subcategorySearch {
+  flex: 1;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+#subcategorySearchBtn {
+  padding: 5px 10px;
+  border: 1px solid #ccc;
+  background-color: #007bff;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#subcategorySearchBtn:hover {
+  background-color: #0056b3;
+}
