@@ -5,19 +5,18 @@ const { Login } = require("../controller/Login.js");
 const { User } = require("../controller/UserDashboard.js");
 const {logout}=require("../controller/logout.js");
 const {HomePageItem}=require("../controller/itemsAthomepage.js");
+const updateProfile=require("../controller/profileupdate.js");
+const upload=require("../middleware/upload.js");
+const getProfile=require("../controller/profile.js");
 router.post("/signup", signup);
 router.get("/login", (req, res) => res.render("login"));
 router.post("/login", Login);
 router.get("/user-dashboard", User);
 router.get("/logout",logout );
+router.post('/logout',logout);
 router.get("/", HomePageItem);
-router.get("/profile", (req, res) => {
-  if (!req.session.user) {
-    return res.redirect("/login");
-  }
-  res.render("profile", {   user: req.session.user,session: req.session });
-});
-
+router.get("/profile", getProfile);
+router.post("/profile/update",upload.single("image"),updateProfile)
 router.get('/session-status', (req, res) => {
   if (req.session.user) {
     res.json({
