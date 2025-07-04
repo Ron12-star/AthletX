@@ -5,22 +5,36 @@ const CartModel=require("../models/CartSchema");
 const addToWishList = async (req, res) => {
   try {
     const userID = req.session.user._id;
-    let { productId } = req.body; // Use let to allow reassignment
+    let { productId } = req.body;
 
     if (!productId) {
-      return res.status(400).json({ success: false, message: "ProductId is required" });
+      return res.send(`
+        <script>
+          alert("ProductId is required.");
+          window.location.href = document.referrer;
+        </script>
+      `);
     }
 
-    // Convert to ObjectId and validate
     try {
       productId = new mongoose.Types.ObjectId(productId);
     } catch (error) {
-      return res.status(400).json({ success: false, message: "Invalid ProductId" });
+      return res.send(`
+        <script>
+          alert("Invalid ProductId.");
+          window.location.href = document.referrer;
+        </script>
+      `);
     }
 
     const product = await Product.findById(productId);
     if (!product) {
-      return res.status(400).json({ success: false, message: "Product not found" });
+      return res.send(`
+        <script>
+          alert("Product not found.");
+          window.location.href = document.referrer;
+        </script>
+      `);
     }
 
     let wishList = await WishListModel.findOne({ userID });
@@ -28,28 +42,45 @@ const addToWishList = async (req, res) => {
       wishList = new WishListModel({ userID, items: [] });
     }
 
-    const productIndex = wishList.items.findIndex(
+    const alreadyInWishlist = wishList.items.find(
       (item) => item.productId.toString() === productId.toString()
     );
 
-    if (productIndex === -1) {
-      wishList.items.push({
-        productId: product._id,
-        name: product.name,
-        image: product.image,
-        details: product.details,
-        price: product.price,
-        discount: product.discount,
-      });
-
-      await wishList.save();
-      res.json({ success: true, message: "Product added to wishlist!" });
-    } else {
-      res.json({ success: false, message: "Product already in wishlist" });
+    if (alreadyInWishlist) {
+      return res.send(`
+        <script>
+          alert("Product already in wishlist!");
+          window.location.href = document.referrer;
+        </script>
+      `);
     }
+
+    wishList.items.push({
+      productId: product._id,
+      name: product.name,
+      image: product.image,
+      details: product.details,
+      price: product.price,
+      discount: product.discount,
+    });
+
+    await wishList.save();
+
+    return res.send(`
+      <script>
+        alert("Product added to wishlist!");
+        window.location.href = document.referrer;
+      </script>
+    `);
+
   } catch (error) {
     console.error("Error adding item to wishlist", error);
-    res.status(500).json({ success: false, message: "Internal server error" });
+    return res.send(`
+      <script>
+        alert("Something went wrong. Try again later.");
+        window.location.href = document.referrer;
+      </script>
+    `);
   }
 };
 

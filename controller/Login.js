@@ -17,16 +17,21 @@ const Login = async (req, res) => {
     }
     console.log('reached here');
     console.log("Entered password:", password);
+    const tempHashedPassword = await bcrypt.hash(password, 10);
     console.log("Type of entered password:", typeof password);
     console.log("Stored hash:", user.password);
+    console.log("password",tempHashedPassword)
     const matched = await bcrypt.compare(String(password), user.password);
     console.log("matched",matched);
     if (!matched) {
       console.log("Invalid password");
-      return res.status(400).json({
-        success: false,
-        message: "Password did not matched",
-      });
+      return res.send(`
+        <script>
+        alert('Invalid credential');
+        window.location.href="/Login";
+        </script>
+        `);
+      alert("password did not match");
     }
 
 

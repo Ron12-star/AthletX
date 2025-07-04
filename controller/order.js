@@ -2,12 +2,11 @@ const Order=require("../models/OrderSchema");
 const Product=require("../models/productschema");
 const User=require("../models/UserSchema");
 const Cart = require('../models/CartSchema');
-const checkoutPage=async(req,res)=>{
+const checkoutPage = async (req, res) => {
   try {
-    // Get cart from session or dummy data (update this based on your app logic)
     const cart = req.session.cart || [];
 
-    // Get full product details for each item
+    // 1. Get full product details
     const cartItems = await Promise.all(
       cart.map(async item => {
         const product = await Product.findById(item.productId);
@@ -19,14 +18,24 @@ const checkoutPage=async(req,res)=>{
       })
     );
 
-    // 👇 Render the EJS view and pass cartItems
-    res.render("checkout", { cartItems });
+    // 2. Fetch user details using session ID
+    const userId = req.session.user?._id;
+    const user = await User.findById(userId).lean();
+
+    if (!user) return res.redirect("/login");
+
+    // 3. Send both cartItems and user data to EJS
+    res.render("checkout", {
+      cartItems,
+      user
+    });
 
   } catch (error) {
     console.error("Error rendering checkout:", error);
     res.status(500).send("Something went wrong");
   }
-}
+};
+
 
 // ✅ user controller
 const placeorder = async (req, res) => {
@@ -194,7 +203,7 @@ const getUserOrdersWithStatus = async (req, res) => {
       .lean();
 
     if (orders.length === 0) {
-      return res.render("userorder-panding", { message: "No orders placed yet." });
+      return res.render("userorder-panding", { message: "No orders placed yet.",order:{} });
     }
 
     const latestOrder = orders[0];
