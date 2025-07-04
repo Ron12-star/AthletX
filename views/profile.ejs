@@ -1,41 +1,68 @@
+<!-- profile.ejs -->
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>User Dashboard</title>
-  <link rel="stylesheet" href="/css/profile.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Profile</title>
+  <link rel="stylesheet" href="/css/profile.css">
 </head>
+
 <body>
-  <div class="container">
-    <div class="card">
-      <form action="/profile" method="POST" enctype="multipart/form-data">
-        <!-- Profile Image -->
-        <img src="<%= user.image || '/images/default-user.png' %>" alt="Profile Picture" class="profile-img" />
-        <input type="file" name="image" accept="image/*" />
-        
-        <!-- Editable Fields -->
-        <label for="name">Name:</label>
-        <input type="text" id="name" name="name" value="<%= user.name || '' %>" />
-        
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" value="<%= user.email %>" readonly />
-        
-        <label for="role">Role:</label>
-        <input type="text" id="role" name="role" value="<%= user.role || '' %>" />
-        
-        <label for="joined">Joined:</label>
-        <input type="text" id="joined" name="joined" value="<%= user.joined || '' %>" readonly />
-        
-        <!-- Save Button -->
-        <button type="submit" class="save-btn">Save</button>
+  <a href="/logout" class="logout-btn">
+    <i class="fa-solid fa-sign-out-alt"></i> Logout
+  </a>
+  <a href="/" class="back-btn">
+    <i class="fa-solid fa-arrow-left"></i> Back to Dashboard
+  </a>
+
+  <div class="profile-container">
+    <div class="sidebar">
+      <div class="icon active"><i class="fa-solid fa-user"></i></div>
+      <div class="icon"><i class="fa-solid fa-lock"></i></div>
+      <div class="icon"><i class="fa-solid fa-bell"></i></div>
+      <div class="icon"><i class="fa-solid fa-refresh"></i></div>
+    </div>
+
+    <div class="profile-card">
+      <h1>Profile</h1>
+      <form action="/profile/update" method="POST" enctype="multipart/form-data">
+        <div class="profile-img-wrapper">
+          <img src="<%= user.image || 'https://via.placeholder.com/100?text=Photo' %>" class="profile-img"
+            alt="Profile Photo" />
+
+          <!-- Hidden file input -->
+          <input type="file" name="image" id="file-upload" class="upload-hidden" />
+
+          <!-- Label acts like button -->
+          <label for="file-upload" class="upload-label">
+            <i class="fa fa-camera"></i>
+          </label>
+        </div>
+
+
+
+        <label>User Name</label>
+        <input type="text" name="name" value="<%= user.name %>" />
+
+        <label>Email</label>
+        <input type="email" name="email" value="<%= user.email %>" readonly />
+
+        <label>Password</label>
+        <input type="password" name="password" placeholder="••••••••" />
+
+        <label>Location</label>
+        <input type="text" name="location" value="<%= user.location || '' %>" />
+
+        <label>Phone</label>
+        <input type="text" name="phone" value="<%= user.phone || '' %>" />
+
+        <button class="save-btn" type="submit">Save</button>
       </form>
 
-      <!-- Logout Form -->
-      <form action="/logout" method="POST" style="margin-top: 1rem;">
-        <button class="logout-btn">Logout</button>
-      </form>
     </div>
   </div>
 </body>
+
 </html>

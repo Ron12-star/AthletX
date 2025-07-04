@@ -9,13 +9,15 @@
 <body>
   <main class="container">
     <h2>✅ Order Successfully Placed!</h2>
-<p><strong>Name:</strong> <%= order.name %></p>
-<p><strong>Address:</strong> <%= order.address %></p>
-<p><strong>Total Amount:</strong> ₹<%= order.totalAmount %></p>
-<p><strong>Payment Method:</strong> <%= order.paymentMethod %></p>
 
-<a href="/">⬅️ Back to Home</a>
+    <% const safeOrder = order || {}; %>
 
+    <p><strong>Name:</strong> <%= safeOrder.name || 'N/A' %></p>
+    <p><strong>Address:</strong> <%= safeOrder.address || 'N/A' %></p>
+    <p><strong>Total Amount:</strong> ₹<%= safeOrder.totalAmount || '0' %></p>
+    <p><strong>Payment Method:</strong> <%= safeOrder.paymentMethod || 'N/A' %></p>
+
+    <a href="/">⬅️ Back to Home</a>
   </main>
 </body>
 </html>

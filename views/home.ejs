@@ -9,7 +9,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
     integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 
 </head>
 
@@ -29,18 +29,17 @@
         </form>
       </div>
       <div class="two">
-        <% if (session && session.user && session.user.loggedIn) { %>
+        <% if (session && session.user) { %>
           <a href="/profile" class="panellink">
-    <i class="fa-solid fa-user"></i>
-    <p>Profile</p>
-  </a>
+            <i class="fa-solid fa-user"></i>
+            <p>Profile</p>
+          </a>
           <% } else { %>
             <a href="/login" class="panellink">
               <i class="fa-solid fa-sign-in-alt"></i>
               <p>Login</p>
             </a>
             <% } %>
-
               <div class="two_one">
                 <a href="Wishlist" class="panellink">
                   <i class="fa-regular fa-heart"></i>
@@ -59,8 +58,8 @@
                   <p>Track Order</p>
                 </a>
               </div>
-              
-              
+
+
       </div>
     </div>
 
@@ -140,7 +139,7 @@
       <h1>High discount</h1>
     </div>
     <div class="product-container" id="highDiscountContainer">
-      
+
       <button class="scroll-btn scroll-left" data-target="discount_list">&#10094;</button>
 
       <div id="discount_list" class="scroll-wrapper">
@@ -156,7 +155,8 @@
                   Price: <del>$<%= product.price %></del>
                   <strong>$<%= (product.price - (product.price * product.discount / 100)).toFixed(2) %></strong>
                 </p>
-                <p> <%= product.details %>
+                <p>
+                  <%= product.details %>
                 </p>
                 <p class="highlight">Discount: <%= product.discount %>%</p>
                 <button class="add-to-cart" data-productid="<%= product._id %>">Add to Cart</button>
@@ -204,12 +204,17 @@
                     <% } %>
                       <strong>$<%= (product.price - (product.price * product.discount / 100)).toFixed(2) %></strong>
                 </p>
-                <p> <%= product.details %>
+                <p>
+                  <%= product.details %>
                 </p>
                 <% if (product.discount> 0) { %>
                   <p class="highlight">Discount: <%= product.discount %>%</p>
                   <% } %>
                     <button class="add-to-cart" data-productid="<%= product._id %>">Add to Cart</button>
+                    <!-- ✅ Add to Wishlist Button -->
+                    <form action="/wishlist" method="POST" style="display:inline;">
+                      <input type="hidden" name="productId" value="<%= product._id %>">
+                      <button type="submit" class="wishlist-btn">❤️ Wishlist</button>
               </div>
               <% }) %>
                 <% } else { %>
@@ -224,21 +229,15 @@
       </button>
     </div>
     <footer class="site-footer">
-      <!-- Newsletter Section -->
-      <div class="newsletter">
-        <pre>Subscribe our newsletter for updates                   </pre>    
-        <form action="/subscribe" method="POST" class="newsletter-form">
-          <input type="email" name="email" placeholder="Your Email Address" required />
-          <button type="submit">→</button>
-        </form>
-      </div>
-    
+
       <!-- Footer Content -->
       <div class="footer-grid">
         <!-- About -->
         <div class="footer-section">
           <h2><i class="fa-solid fa-bicycle"></i> Athlete</h2>
-          <p>At AthleteX, we empower every athlete — men, women, and children — with premium sports equipment and performance-ready apparel. Whether you're hitting the gym, the field, or the track, our gear is designed to elevate your game and style. Your journey to greatness starts here.</p>
+          <p>At AthleteX, we empower every athlete — men, women, and children — with premium sports equipment and
+            performance-ready apparel. Whether you're hitting the gym, the field, or the track, our gear is designed to
+            elevate your game and style. Your journey to greatness starts here.</p>
           <div class="social-icons">
             <a href="#"><i class="fab fa-instagram"></i></a>
             <a href="#"><i class="fab fa-linkedin"></i></a>
@@ -246,8 +245,8 @@
             <a href="#"><i class="fab fa-facebook"></i></a>
           </div>
         </div>
-        
-    
+
+
         <!-- Company -->
         <div class="footer-section">
           <h3>Company</h3>
@@ -258,7 +257,7 @@
             <li><a href="/privacy-policy">Privacy Policy</a></li>
           </ul>
         </div>
-    
+
         <!-- Services -->
         <div class="footer-section">
           <h3>Our Services</h3>
@@ -270,8 +269,8 @@
             <li><a href="/services/community-events">Local Sports Events</a></li>
           </ul>
         </div>
-        
-    
+
+
         <!-- Contact -->
         <div class="footer-section">
           <h3>Contact</h3>
@@ -282,7 +281,7 @@
           </ul>
         </div>
       </div>
-    
+
       <!-- Footer Bottom -->
       <div class="footer-bottom">
         <p> All Rights Reserved</p>
@@ -293,7 +292,7 @@
         </div>
       </div>
     </footer>
-    
+
   </main>
   <script src="/static/index.js" type="text/javascript"></script>
 </body>

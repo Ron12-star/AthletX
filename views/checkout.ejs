@@ -1,42 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Checkout</title>
     <link rel="stylesheet" href="/css/checkout.css">
 </head>
+
 <body>
     <main>
         <h1>Checkout</h1>
         <form action="/place-order" method="POST">
             <label for="name">Full Name:</label>
-            <input type="text" id="name" name="name" required>
-        
+            <input type="text" id="name" name="name" value="<%= user?.name || '' %>" required>
+
             <label for="phone">Phone Number:</label>
-            <input type="tel" id="phone" name="phone" required>
-        
+            <input type="tel" id="phone" name="phone" value="<%= user?.phone || '' %>" required>
+
             <label for="address">Shipping Address:</label>
-            <textarea id="address" name="address" required></textarea>
-        
+            <textarea id="address" name="address" required><%= user?.address || '' %></textarea>
+
             <label for="payment-method">Payment Method:</label>
             <select id="payment-method" name="paymentMethod" required>
                 <option value="credit_card">Credit Card</option>
                 <option value="paypal">PayPal</option>
                 <option value="cod">Cash on Delivery</option>
             </select>
-        
+
             <!-- 🛒 Hidden fields to send cart items -->
-            <% if (cartItems && cartItems.length > 0) { %>
-                <% cartItems.forEach((item, index) => { %>
+            <% if (cartItems && cartItems.length> 0) { %>
+                <% cartItems.forEach((item, index)=> { %>
                     <input type="hidden" name="cartItems[<%= index %>][productId]" value="<%= item.productId %>">
                     <input type="hidden" name="cartItems[<%= index %>][quantity]" value="<%= item.quantity %>">
-                <% }) %>
-            <% } %>
-        
-            <button type="submit">Place Order</button>
+                    <% }) %>
+                        <% } %>
+
+                            <button type="submit">Place Order</button>
         </form>
-        
+
+
     </main>
 </body>
+
 </html>
