@@ -180,12 +180,12 @@
         <div class="slide"><img src="/Images/lower2.avif" alt="Ad 2" /></div>
         <div class="slide"><img src="/Images/lower3.avif" alt="Ad 3" /></div>
       </div>
-      <button class="scroll-btn scroll-left carousel-btn" data-target="carousel">&#10094;</button>
-      <button class="scroll-btn scroll-right carousel-btn" data-target="carousel">&#10095;</button>
+      <button type="button" class="scroll-btn scroll-left carousel-btn" data-target="carousel">&#10094;</button>
+      <button type="button" class="scroll-btn scroll-right carousel-btn" data-target="carousel">&#10095;</button>
     </div>
     <!-- low Discount Product Slider -->
     <div class="product-container" id="lowDiscountContainer">
-      <button class="scroll-btn scroll-left" data-target="product_list">&#10094;</button>
+      <button type="button" class="scroll-btn scroll-left" data-target="product_list">&#10094;</button>
 
 
       <div id="product_list" class="scroll-wrapper">
@@ -210,11 +210,13 @@
                 <% if (product.discount> 0) { %>
                   <p class="highlight">Discount: <%= product.discount %>%</p>
                   <% } %>
-                    <button class="add-to-cart" data-productid="<%= product._id %>">Add to Cart</button>
+                  <p>Stock Left: {quantity - sales}</p>
+                    <button type="button" class="add-to-cart" data-productid="<%= product._id %>">Add to Cart</button>
                     <!-- ✅ Add to Wishlist Button -->
                     <form action="/wishlist" method="POST" style="display:inline;">
                       <input type="hidden" name="productId" value="<%= product._id %>">
                       <button type="submit" class="wishlist-btn">❤️ Wishlist</button>
+                    </form>
               </div>
               <% }) %>
                 <% } else { %>
@@ -222,7 +224,7 @@
                   <% } %>
         </div>
       </div>
-      <button class="scroll-btn scroll-right" data-target="product_list">&#10095;</button>
+      <button type="button" class="scroll-btn scroll-right" data-target="product_list">&#10095;</button>
       <button id="toggleLowDiscount" class="toggle-view-btn"
         onclick="toggleView('lowDiscountContainer', 'toggleLowDiscount')">
         Show All Products

@@ -33,7 +33,6 @@ const AddItems=async (req, res) => {
     res.status(500).json({ error: "Failed to add product" });
   }
 }
-
 const UpdateItems = async (req, res) => {
   try {
     const { image, name, details, quantity, price, sales, discount, category, subcategory,bestseller } = req.body;
@@ -130,12 +129,6 @@ const getPendingOrders = async (req, res) => {
     res.status(500).send("Error fetching pending orders");
   }
 };
-
-
-
-
-// Controller
-// Controller
 const completeOrder = async (req, res) => {
   try {
     const orderId = req.body.orderId;
@@ -178,15 +171,6 @@ const completeOrder = async (req, res) => {
     res.status(500).send("Error completing order11111111111111111111111111111");
   }
 };
-
-
-
-
-
-
-
-
-// ✅ NEW: Vendor Dashboard Stats
 const getVendorDashboard = async (req, res) => {
   try {
     if (!req.session.user || req.session.user.role !== "vendor") {

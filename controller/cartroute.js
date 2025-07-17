@@ -83,7 +83,6 @@ const addToCart = async (req, res) => {
       .json({ success: false, message: "Internal server error" });
   }
 };
-
 const getCart = async (req, res) => {
   try {
     const userID = req.session.user._id;
@@ -155,7 +154,6 @@ const removeFromCart = async (req, res) => {
     res.status(500).json({ success: false, message: "Internal server error" });
   }
 };
-
 const updateCart = async (req, res) => {
   try {
       const { productId, quantity } = req.body;

@@ -9,11 +9,9 @@ const CartRouter=require("./routes/cartRouter.js");
 const WishListRouter=require("./routes/WishlistRouter.js");
 const CategoryRouter=require("./routes/CategoryRouter.js");
 const OrderRouter=require('./routes/OrderRoutes.js');
-//intialize express app
 const app = express();
 require("dotenv").config();
 
-//middleware
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 

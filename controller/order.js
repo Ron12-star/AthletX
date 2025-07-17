@@ -36,8 +36,6 @@ const checkoutPage = async (req, res) => {
   }
 };
 
-
-// ✅ user controller
 const placeorder = async (req, res) => {
   try {
     const { name, phone, address, paymentMethod } = req.body;
@@ -115,7 +113,6 @@ res.redirect("/order-status");
     res.status(500).send("Error placing order");
   }
 };
-
 const getOrderStatus = async (req, res) => {
   try {
     if (!req.session.user || !req.session.user._id) {
@@ -146,50 +143,9 @@ const getOrderStatus = async (req, res) => {
     res.status(500).send("Error checking order status");
   }
 };
-
-
-
 const getOrderConfirmation=(req,res)=>{
   res.render('userorder-confirmation');
 }
-// const getUserOrdersWithStatus = async (req, res) => {
-//   try {
-//     if (!req.session.user || !req.session.user._id) {
-//       return res.redirect("/login");
-//     }
-
-//     const userId = req.session.user._id;
-
-//     const orders = await Order.find({ userId })
-//       .sort({ createdAt: -1 })
-//       .lean();
-
-//       const detailedOrders = orders.map(order => ({
-//         _id: order._id,
-//         createdAt: order.createdAt,
-//         completedVendors: order.vendors
-//           .filter(vendor => vendor.status === "Completed")
-//           .map(vendor => ({
-//             status: "Completed",
-//             completedAt: vendor.completedAt,
-//             items: vendor.items.map(item => ({
-//               name: item.name,
-//               description: item.description,
-//               image: item.image, // Should be a URL or relative path
-//               price: item.price,
-//               quantity: item.quantity,
-//               total: item.price * item.quantity
-//             }))
-//           }))
-//       }));
-
-//     res.render("userorder-confirmation", { orders: detailedOrders });
-//   } catch (error) {
-//     console.error("❌ Error fetching user orders:", error);
-//     res.status(500).send("Error fetching orders");
-//   }
-// };
-
 const getUserOrdersWithStatus = async (req, res) => {
   try {
     if (!req.session.user || !req.session.user._id) {
@@ -243,10 +199,4 @@ const getUserOrdersWithStatus = async (req, res) => {
     res.status(500).send("Error fetching orders");
   }
 };
-
-
-
-
-
-
 module.exports={checkoutPage,placeorder,getOrderConfirmation,getUserOrdersWithStatus ,getOrderStatus};
