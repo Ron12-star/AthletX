@@ -31,7 +31,7 @@ app.use(
 //Server static files
 app.use(express.static(path.join(__dirname, "public")));
 app.use("/static", express.static(path.join(__dirname, "static")));
-
+app.use('/Images', express.static(path.join(__dirname, 'public/Images')));
 
 //set view engines
 app.set("view engine", "ejs");
