@@ -14,17 +14,20 @@ h1 {
   margin-bottom: 20px;
 }
 
+/* Wishlist Container */
 #wishlist {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  display: flex;
+  flex-wrap: wrap;
   gap: 20px;
   padding: 20px;
   max-width: 1200px;
   margin: 0 auto;
+  justify-content: flex-start; /* Change to center if needed */
 }
 
 /* Wishlist Item */
 .wishlist-item {
+  width: 300px; /* ✅ Fixed card width */
   background: white;
   border-radius: 10px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
@@ -89,10 +92,30 @@ button {
 .remove-from-wishlist:hover {
   background: #c82333;
 }
+.continue-shopping {
+  display: inline-block;
+  padding: 10px 20px;
+  margin: 20px auto;
+  background-color: #000000;
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  border-radius: 5px;
+  text-align: center;
+  transition: background 0.3s, transform 0.2s;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.continue-shopping:hover {
+  background-color: #0056b3;
+  transform: translateY(-2px);
+}
+
 
 /* Responsive Design */
 @media (max-width: 768px) {
-  #wishlist {
-      grid-template-columns: 1fr;
+  .wishlist-item {
+    width: 100%; /* ✅ Make card full width on small screens */
   }
 }
+

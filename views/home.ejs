@@ -21,7 +21,6 @@
         <a href="/" class="panellink">
           <h3>ATHLETEX</h3>
         </a>
-
         <!-- Search Bar -->
         <form action="/search" method="GET">
           <input type="text" name="q" id="search-input" placeholder="Search products..." required />
@@ -97,11 +96,11 @@
         <p>Shoes</p>
       </a>
       <a href="/category/Equipment" class="category-box">
-        <img src="/Images/Equipment & cycles.avif" alt="Equipment & Cycles" />
+        <img src="/Images/Equipment & cycles.avif" alt="Equsipment & Cycles" />
         <p>Equipment & Cycles</p>
       </a>
       <a href="/category/Bags & Backpacks" class="category-box">
-        <img src="/Images/Bags and Backpacks.avif" alt="Bags & Backpacks" />
+        <img src="/Images/Bags-and-Backpacks.avif" alt="Bags & Backpacks" />
         <p>Bags & Backpacks</p>
       </a>
       <a href="/category/Sports Accessories" class="category-box">
@@ -134,10 +133,14 @@
     <div id="after_advertisement">
       <img src="/Images/after advertisement.avif" alt="" />
     </div>
+    <br>
+    <br>
     <!-- High Discount Product Slider -->
     <div class="heading">
       <h1>High discount</h1>
     </div>
+    <br>
+    <br>
     <div class="product-container" id="highDiscountContainer">
 
       <button class="scroll-btn scroll-left" data-target="discount_list">&#10094;</button>
@@ -173,6 +176,8 @@
         Show All Products
       </button>
     </div>
+    <br>
+    <br>
     <!---------------------------------------------------------------------------->
     <div class="carousel-container">
       <div class="carousel">
@@ -183,7 +188,14 @@
       <button type="button" class="scroll-btn scroll-left carousel-btn" data-target="carousel">&#10094;</button>
       <button type="button" class="scroll-btn scroll-right carousel-btn" data-target="carousel">&#10095;</button>
     </div>
+    <br>
+    <br>
     <!-- low Discount Product Slider -->
+      <div class="heading">
+      <h1>Low discount</h1>
+    </div>
+    <br>
+    <br>
     <div class="product-container" id="lowDiscountContainer">
       <button type="button" class="scroll-btn scroll-left" data-target="product_list">&#10094;</button>
 
@@ -210,13 +222,12 @@
                 <% if (product.discount> 0) { %>
                   <p class="highlight">Discount: <%= product.discount %>%</p>
                   <% } %>
-                  <p>Stock Left: {quantity - sales}</p>
                     <button type="button" class="add-to-cart" data-productid="<%= product._id %>">Add to Cart</button>
                     <!-- ✅ Add to Wishlist Button -->
                     <form action="/wishlist" method="POST" style="display:inline;">
-                      <input type="hidden" name="productId" value="<%= product._id %>">
-                      <button type="submit" class="wishlist-btn">❤️ Wishlist</button>
+                      <button type="submit" class="wishlist-btn">Add to Wishlist</button>
                     </form>
+
               </div>
               <% }) %>
                 <% } else { %>
@@ -230,6 +241,8 @@
         Show All Products
       </button>
     </div>
+    <br>
+    <br>
     <footer class="site-footer">
 
       <!-- Footer Content -->
