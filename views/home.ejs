@@ -112,13 +112,16 @@
     <div class="carousel-container">
       <div class="carousel" id="carouselTop">
         <div class="slide">
-          <img src="/upper1.avif" alt="Ad 1" />
+          <img src="/7.avif" alt="Ad 1" />
         </div>
         <div class="slide">
           <img src="/upper2.avif" alt="Ad 2" />
         </div>
         <div class="slide">
           <img src="/lower2.avif" alt="Ad 3" />
+        </div>
+        <div class="slide">
+          <img src="/8.avif" alt="Ad 4" />
         </div>
       </div>
 
@@ -155,8 +158,8 @@
                   <%= product.name %>
                 </h3>
                 <p>
-                  Price: <del>$<%= product.price %></del>
-                  <strong>$<%= (product.price - (product.price * product.discount / 100)).toFixed(2) %></strong>
+                  Price: <del style="text-decoration: line-through; color: gray;">₹ <%= product.price %></del>
+                  <strong style="color: green;">$<%= (product.price - (product.price * product.discount / 100)).toFixed(2) %></strong>
                 </p>
                 <p>
                   <%= product.details %>
@@ -184,6 +187,8 @@
         <div class="slide"><img src="/lower1.avif" alt="Ad 1" /></div>
         <div class="slide"><img src="/lower2.avif" alt="Ad 2" /></div>
         <div class="slide"><img src="/lower3.avif" alt="Ad 3" /></div>
+        <div class="slide"><img src="/9.avif" alt="Ad 3" /></div>
+        <div class="slide"><img src="/10.avif" alt="Ad 3" /></div>
       </div>
       <button type="button" class="scroll-btn scroll-left carousel-btn" data-target="carousel">&#10094;</button>
       <button type="button" class="scroll-btn scroll-right carousel-btn" data-target="carousel">&#10095;</button>
@@ -212,9 +217,9 @@
                 <p>
                   Price:
                   <% if (product.discount> 0) { %>
-                    <del>$<%= product.price %></del>
+                    <del style="text-decoration: line-through; color: gray;">₹ <%= product.price %></del>
                     <% } %>
-                      <strong>$<%= (product.price - (product.price * product.discount / 100)).toFixed(2) %></strong>
+                      <strong style="color: green;">$<%= (product.price - (product.price * product.discount / 100)).toFixed(2) %></strong>
                 </p>
                 <p>
                   <%= product.details %>
@@ -224,7 +229,8 @@
                   <% } %>
                     <button type="button" class="add-to-cart" data-productid="<%= product._id %>">Add to Cart</button>
                     <!-- ✅ Add to Wishlist Button -->
-                    <form action="/wishlist" method="POST" style="display:inline;">
+                    <form action="/Wishlist" method="POST" style="display:inline;">
+                       <input type="hidden" name="productId" value="<%= product._id %>" />
                       <button type="submit" class="wishlist-btn">Add to Wishlist</button>
                     </form>
 

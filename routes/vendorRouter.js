@@ -1,15 +1,15 @@
 const express=require("express");
 const router=express.Router();
-const Product=require("../models/productschema.js");
+
 const {vendorAuth}=require("../middleware/authmiddleware.js");
 const {AddItems,UpdateItems,DeleteItems,getPendingOrders,
   completeOrder,getVendorDashboard}=require("../controller/vendorcontroller/vendoractivity.js")
   const Order=require("../models/OrderSchema.js");
-
+const upload=require("../multer/multer.js")
 // router.get("/vendor-dashboard", vendorAuth, getVendorDashboard);
 router.get("/",vendorAuth,getVendorDashboard);
 
-router.post("/add", vendorAuth,AddItems );
+router.post("/add", vendorAuth,upload.single("image"),AddItems );
 router.put("/update/:id", vendorAuth,UpdateItems );
 router.delete("/delete/:id", vendorAuth,DeleteItems );
 

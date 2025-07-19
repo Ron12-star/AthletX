@@ -17,6 +17,35 @@ document.addEventListener("DOMContentLoaded", function () {
     modal.style.display = "none";
   });
 
+  //add from my pc
+  document
+    .getElementById("productForm")
+    .addEventListener("submit", async function (e) {
+      e.preventDefault();
+
+      const form = document.getElementById("productForm");
+      const formData = new FormData(form);
+
+      try {
+        const response = await fetch("http://localhost:7777/vendor-dashboard/add", {
+          method: "POST",
+          body: formData,
+          credentials: "include", // ✅ if using session
+        });
+
+        const result = await response.json();
+        console.log(result);
+
+        if (response.ok) {
+          alert("Product added!");
+          form.reset();
+        } else {
+          alert(result.error || "Something went wrong");
+        }
+      } catch (err) {
+        console.error("Error submitting form", err);
+      }
+    });
   // Handle Add / Update Product
   productForm.addEventListener("submit", async (e) => {
     e.preventDefault();
@@ -74,18 +103,30 @@ async function deleteProduct(id) {
 
 // Edit Product Function
 function editProduct(id) {
-  const product = document.querySelector(`button[onclick="editProduct('${id}')"]`).parentElement;
-  
+  const product = document.querySelector(
+    `button[onclick="editProduct('${id}')"]`
+  ).parentElement;
+
   document.getElementById("image").value = product.querySelector("img").src;
   document.getElementById("name").value = product.querySelector("h3").innerText;
-  document.getElementById("details").value = product.querySelectorAll("p")[0].innerText;
-  document.getElementById("quantity").value = parseInt(product.querySelectorAll("p")[1].innerText.split(": ")[1]);
-  document.getElementById("price").value = parseFloat(product.querySelectorAll("p")[2].innerText.split("$")[1]);
-  document.getElementById("sales").value = parseInt(product.querySelectorAll("p")[3].innerText.split(": ")[1]);
-  document.getElementById("discount").value = parseFloat(product.querySelectorAll("p")[4].innerText.split("%")[0]);
-  document.getElementById("category").value = product.getAttribute("data-category");
-  document.getElementById("subcategory").value = product.getAttribute("data-subcategory") || "";
+  document.getElementById("details").value =
+    product.querySelectorAll("p")[0].innerText;
+  document.getElementById("quantity").value = parseInt(
+    product.querySelectorAll("p")[1].innerText.split(": ")[1]
+  );
+  document.getElementById("price").value = parseFloat(
+    product.querySelectorAll("p")[2].innerText.split("$")[1]
+  );
+  document.getElementById("sales").value = parseInt(
+    product.querySelectorAll("p")[3].innerText.split(": ")[1]
+  );
+  document.getElementById("discount").value = parseFloat(
+    product.querySelectorAll("p")[4].innerText.split("%")[0]
+  );
+  document.getElementById("category").value =
+    product.getAttribute("data-category");
+  document.getElementById("subcategory").value =
+    product.getAttribute("data-subcategory") || "";
   document.getElementById("productId").value = id;
   document.getElementById("productModal").style.display = "block";
 }
-

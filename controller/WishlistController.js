@@ -87,6 +87,7 @@ const addToWishList = async (req, res) => {
 const getWishlist = async (req, res) => {
   try {
     const userID = req.session.user._id;
+    
     const wishList = await WishListModel.findOne({ userID });
 
     if (!wishList || wishList.items.length === 0) {

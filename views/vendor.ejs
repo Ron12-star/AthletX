@@ -1,134 +1,151 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vendor Dashboard</title>
-    <link rel="stylesheet" href="/css/vendor.css" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
-      integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    />
-  </head>
-  <body>
-    <!-- Navigation Bar -->
-    <nav class="navbar">
-      <div class="logo">ATHLETEX</div>
-      <ul class="nav-links">
-        <li><a href="/vendor-dashboard">Home</a></li>
-        <li><a href="/vendors/products">Products</a></li>
-        <li><a href="/vendors/reviews">Reviews</a></li>
-        <li><a href="/vendors/orders">Orders</a></li>
-        <li><a href="/logout" class="logout-btn">Logout</a></li>
-      </ul>
-    </nav>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vendor Dashboard</title>
+  <link rel="stylesheet" href="/css/vendor.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+    integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body>
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+    <div class="logo">ATHLETEX</div>
+    <ul class="nav-links">
+      <li><a href="/vendor-dashboard">Home</a></li>
+      <li><a href="/vendors/products">Products</a></li>
+      <li><a href="/vendors/reviews">Reviews</a></li>
+      <li><a href="/vendors/orders">Orders</a></li>
+      <li><a href="/logout" class="logout-btn">Logout</a></li>
+    </ul>
+  </nav>
 
   <!-- Dashboard Stats -->
-<main class="dashboard">
-  <div class="stats">
-    <div class="stat-item">
-      <h3>Total Sales</h3>
-      <p>₹<%= totalSales %></p>
-    </div>
-
-    <div class="stat-item">
-      <h3><a href="/vendor-dashboard/orders">Pending Orders</a></h3>
-      <p><%= pendingCount %></p>
-    </div>
-
-    <div class="stat-item">
-      <h3><a href="/vendor-dashboard/orders/vendorcomplete">Completed Orders</a></h3>
-      <p><%= completedCount %></p>
-    </div>
-
-    <div class="stat-item">
-      <h3>Store Rating</h3>
-      <p><%= rating %> ⭐</p>
-    </div>
-  </div>
-
-
-      <!-- Product Management Grid -->
-      <div class="product-management">
-        <div class="product-card add-product">
-          <img src="/Images/add item images.png" alt="Add New Product" />
-          <p>Add New Product</p>
-        </div>
+  <main class="dashboard">
+    <div class="stats">
+      <div class="stat-item">
+        <h3>Total Sales</h3>
+        <p>₹<%= totalSales %>
+        </p>
       </div>
 
-       <!-- Products Display -->
-       <div id="product-container">
-        <% products.forEach(product => { %>
+      <div class="stat-item">
+        <h3><a href="/vendor-dashboard/orders">Pending Orders</a></h3>
+        <p>
+          <%= pendingCount %>
+        </p>
+      </div>
+
+      <div class="stat-item">
+        <h3><a href="/vendor-dashboard/orders/vendorcomplete">Completed Orders</a></h3>
+        <p>
+          <%= completedCount %>
+        </p>
+      </div>
+
+      <div class="stat-item">
+        <h3>Store Rating</h3>
+        <p>
+          <%= rating %> ⭐
+        </p>
+      </div>
+    </div>
+
+
+    <!-- Product Management Grid -->
+    <div class="product-management">
+      <div class="product-card add-product">
+        <img src="Images/add item images.png" alt="Add New Product" />
+        <p>Add New Product</p>
+      </div>
+    </div>
+
+    <!-- Products Display -->
+    <div id="product-container">
+      <% products.forEach(product=> { %>
         <div class="product" data-category="<%= product.category %>" data-subcategory="<%= product.subcategory %>">
           <img src="<%= product.image %>" alt="<%= product.name %>" width="100" />
-          <h3><%= product.name %></h3>
-          <p><%= product.details %></p>
-          <p>Category: <%= product.category %></p>
+          <h3>
+            <%= product.name %>
+          </h3>
+          <p>
+            <%= product.details %>
+          </p>
+          <p>Category: <%= product.category %>
+          </p>
           <% if (product.subcategory) { %>
-            <p>Subcategory: <%= product.subcategory %></p>
-          <% } %>
-          <p>Quantity: <%= product.quantity %></p>
-          <p>Price: $<%= product.price %></p>
-          <p>Sales: <%= product.sales %></p>
-          <p>Discount: <%= product.discount %> %</p>
-          <button onclick="editProduct('<%= product._id %>')">Edit</button>
-          <button onclick="deleteProduct('<%= product._id %>')">Delete</button>
+            <p>Subcategory: <%= product.subcategory %>
+            </p>
+            <% } %>
+              <p>Quantity: <%= product.quantity %>
+              </p>
+              <p>Price: ₹<%= product.price %>
+              </p>
+              <p>Sales: <%= product.sales %>
+              </p>
+              <p>Discount: <%= product.discount %>%</p>
+              <button onclick="editProduct('<%= product._id %>')">Edit</button>
+              <button onclick="deleteProduct('<%= product._id %>')">Delete</button>
         </div>
         <% }) %>
-      </div>
-    </main>
-
-    <!-- Add Product Modal -->
-    <div id="productModal" class="modal" style="display: none">
-      <div class="modal-content">
-        <span class="close">&times;</span>
-        <h2>Add / Update Product</h2>
-        <form id="productForm">
-          <input type="hidden" id="productId" />
-          <label>Image URL:</label>
-          <input type="text" id="image" required />
-
-          <label>Product Name:</label>
-          <input type="text" id="name" required />
-
-          <label>Product Details:</label>
-          <textarea id="details" required></textarea>
-          <label>Category:</label>
-          <select id="category" required>
-            <option value="">Select Category</option>
-            <option value="Men">Men</option>
-            <option value="Women">Women</option>
-            <option value="Kids">Kids</option>
-            <option value="Shoes">Shoes</option>
-            <option value="Equipment & Cycles">Equipment & Cycles</option>
-            <option value="Bags & Backpacks">Bags & Backpacks</option>
-            <option value="Sports Accessories">Sports Accessories</option>
-          </select>
-
-          <label>Subcategory:</label>
-          <input type="text" id="subcategory" placeholder="Enter subcategory (optional)" />
-
-          <label>Quantity:</label>
-          <input type="number" id="quantity" required />
-
-          <label>Price:</label>
-          <input type="number" id="price" required />
-
-          <label>Sales:</label>
-          <input type="number" id="sales" required />
-
-          <label>Discount (%):</label>
-          <input type="number" id="discount" />
-          <label>Bestseller:</label>
-<input type="checkbox" id="bestseller" />
-
-          <button type="submit">Save Product</button>
-        </form>
-      </div>
     </div>
-    <script src="/static/vendor.js"></script>
-  </body>
+
+  </main>
+
+  <!-- Add Product Modal -->
+  <div id="productModal" class="modal" style="display: none">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h2>Add / Update Product</h2>
+      <form id="productForm" enctype="multipart/form-data" method="POST">
+        <input type="hidden" id="productId" />
+        <label>Upload Image:</label>
+        <input type="file" id="image" name="image" required />
+
+
+        <label>Product Name:</label>
+        <input type="text" id="name" name="name" required />
+
+        <label>Product Details:</label>
+        <textarea id="details" name="details" required></textarea>
+        <label>Category:</label>
+        <select id="category" name="category" required>
+          <option value="">Select Category</option>
+          <option value="Men">Men</option>
+          <option value="Women">Women</option>
+          <option value="Kids">Kids</option>
+          <option value="Shoes">Shoes</option>
+          <option value="Equipment & Cycles">Equipment & Cycles</option>
+          <option value="Bags & Backpacks">Bags & Backpacks</option>
+          <option value="Sports Accessories">Sports Accessories</option>
+        </select>
+
+        <label>Subcategory:</label>
+        <input type="text" id="subcategory" name="subcategory" />
+
+        <label>Quantity:</label>
+        <input type="number" id="quantity" name="quantity" required />
+
+        <label>Price:</label>
+        <input type="number" id="price" name="price" required />
+
+        <label>Sales:</label>
+        <input type="number" id="sales" name="sales" required />
+
+        <label>Discount (%):</label>
+        <input type="number" id="discount" name="discount" />
+        <label>Bestseller:</label>
+        <input type="checkbox" id="bestseller" name="bestseller" />
+
+        <button type="submit">Save Product</button>
+      </form>
+    </div>
+  </div>
+  <script src="/static/vendor.js"></script>
+</body>
+
 </html>
