@@ -1,23 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Order Pending</title>
-  <link rel="stylesheet" href="/css/style.css" />
-</head>
-<body>
-  <main class="container">
-    <h2>✅ Order Successfully Placed!</h2>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Order Pending</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-gray-100 text-gray-800 min-h-screen flex items-center justify-center">
+    <main class="bg-white max-w-xl w-full p-8 rounded-2xl shadow-lg text-center">
+      <h2 class="text-2xl md:text-3xl font-bold text-green-600 mb-6">✅ Order Successfully Placed!</h2>
 
-    <% const safeOrder = order || {}; %>
+      <% const safeOrder = order || {}; %>
 
-    <p><strong>Name:</strong> <%= safeOrder.name || 'N/A' %></p>
-    <p><strong>Address:</strong> <%= safeOrder.address || 'N/A' %></p>
-    <p><strong>Total Amount:</strong> ₹<%= safeOrder.totalAmount || '0' %></p>
-    <p><strong>Payment Method:</strong> <%= safeOrder.paymentMethod || 'N/A' %></p>
+      <div class="space-y-3 text-left text-base md:text-lg">
+        <p><strong>Name:</strong> <%= safeOrder.name || 'N/A' %></p>
+        <p><strong>Address:</strong> <%= safeOrder.address || 'N/A' %></p>
+        <p><strong>Total Amount:</strong> ₹<%= safeOrder.totalAmount || '0' %></p>
+        <p><strong>Payment Method:</strong> <%= safeOrder.paymentMethod || 'N/A' %></p>
+      </div>
 
-    <a href="/">⬅️ Back to Home</a>
-  </main>
-</body>
+      <a
+        href="/"
+        class="inline-block mt-6 text-white bg-black hover:bg-blue-700 px-6 py-2 rounded-lg text-sm md:text-base transition duration-300"
+      >
+        ⬅️ Back to Home
+      </a>
+    </main>
+  </body>
 </html>

@@ -1,45 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Shopping Cart</title>
-  <link rel="stylesheet" href="/css/cart.css">
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-  <main>
-  <!-- <h1>Shopping Cart</h1> -->
-    <div id="cart-container">
+<body class="bg-gray-50 min-h-screen">
+  <main class="py-6 px-4">
+    <div class="max-w-4xl mx-auto bg-white shadow-lg rounded-lg p-6">
       <% cartItems.forEach(item => { %>
-          <div class="cart-item">
-              <img src="<%= item.image %>" alt="<%= item.name %>" width="100">
-              <div class="cart-details">
-                  <h3><%= item.name %></h3>
-                  <p>Price: $<%= item.price %></p>
-                  <p>Quantity: 
-                    <button class="decrease-btn" data-productid="<%= item.productId %>">-</button>
-                    <span class="quantity" id="quantity-<%= item.productId %>"><%= item.quantity %></span>
-                    <button class="increase-btn" data-productid="<%= item.productId %>">+</button>
-                  </p>
-                  <p>Discount: <%= item.discount %>%</p>
-                  <!-- <p id="total-price"><strong>Total: $<%= (item.price * item.quantity * (1 - item.discount / 100)).toFixed(2) %></strong></p> -->
-                  <p id="total-item-price-<%= item.productId %>" data-price="<%= item.price %>" data-discount="<%= item.discount %>"><strong>
-                    Total: $<%= (item.price * item.quantity * (1 - item.discount / 100)).toFixed(2) %></strong>
-                </p>
-                  
-                  <button class="remove-btn" data-productid="<%= item.productId %>">Remove</button>
+        <div class="flex flex-col sm:flex-row items-center justify-between border-b border-gray-200 py-4 hover:bg-gray-100 transition duration-200">
+          <img src="<%= item.image %>" alt="<%= item.name %>" class="w-48 h-48 object-cover rounded-lg border-4 border-gray-800 mb-4 sm:mb-0 sm:mr-4" />
 
-              </div>
+          <div class="flex-1 flex flex-col gap-2 sm:gap-3">
+            <h3 class="text-xl font-semibold text-black"><%= item.name %></h3>
+            <p class="text-gray-700">Price: $<%= item.price %></p>
+
+            <p class="text-gray-700 flex items-center gap-2">
+              Quantity:
+              <button class="bg-gray-300 text-black px-2 rounded" data-productid="<%= item.productId %>">-</button>
+              <span id="quantity-<%= item.productId %>" class="font-semibold"><%= item.quantity %></span>
+              <button class="bg-gray-300 text-black px-2 rounded" data-productid="<%= item.productId %>">+</button>
+            </p>
+
+            <p class="text-gray-700">Discount: <%= item.discount %>%</p>
+
+            <p id="total-item-price-<%= item.productId %>" data-price="<%= item.price %>" data-discount="<%= item.discount %>" class="text-lg font-bold text-black">
+              Total: $<%= (item.price * item.quantity * (1 - item.discount / 100)).toFixed(2) %>
+            </p>
+
+            <button class="remove-btn bg-black text-white px-4 py-2 rounded-md hover:bg-blue-700 w-fit mt-2" data-productid="<%= item.productId %>">Remove</button>
           </div>
+        </div>
       <% }); %>
-  </div>
-  
-  <a href="/">Continue Shopping</a>
-  <div class="cart-total">
-    <h3>Total Price: $<span id="total-price"><%= totalPrice %></span></h3>
-    <button class="checkout-btn">Proceed to Checkout</button>
-</div>
-</main>
-<script src="/static/cart.js" type="text/javascript"></script>
+    </div>
+
+    <div class="text-center mt-6">
+      <a href="/" class="inline-block bg-black text-white px-5 py-2 rounded hover:bg-blue-700 font-semibold">Continue Shopping</a>
+    </div>
+
+    <div class="fixed bottom-0 left-0 w-full bg-white border-t-4 border-black shadow-md px-6 py-4 flex justify-between items-center z-50">
+      <h3 class="text-lg font-bold text-gray-800">
+        Total Price: $<span id="total-price"><%= totalPrice %></span>
+      </h3>
+      <button class="checkout-btn bg-black text-white px-6 py-2 text-lg rounded hover:bg-blue-700">
+        Proceed to Checkout
+      </button>
+    </div>
+  </main>
+
+  <script src="/static/cart.js" type="text/javascript"></script>
 </body>
 </html>

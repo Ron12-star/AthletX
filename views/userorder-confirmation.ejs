@@ -1,47 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Your Orders</title>
-  <link rel="stylesheet" href="/css/userorder-confirmation.css">
-</head>
-<body>
-  <main class="orders-container">
-    <h1>Your Orders 📦</h1>
-  
-    <% if (orders.length === 0) { %>
-      <p>No orders placed yet.</p>
-    <% } else { %>
-      <% orders.forEach(order => { %>
-        <div class="order-card">
-          <!-- <h2>Order ID: <%= order._id %></h2> -->
-          <p><strong>Placed on:</strong> <%= new Date(order.createdAt).toLocaleString() %></p>
-  
-          <% order.completedVendors.forEach(vendor => { %>
-            <div class="vendor-block">
-              <h3>Status: ✅ <%= vendor.status %></h3>
-              <p><strong>Completed At:</strong> <%= new Date(vendor.completedAt).toLocaleString() %></p>
-  
-              <div class="items-grid">
-                <% vendor.items.forEach(item => { %>
-                  <div class="item-card">
-                    <img src="<%= item.image %>" alt="<%= item.name %> image" class="item-img"/>
-                    <div class="item-info">
-                      <h4><%= item.name %></h4>
-                      <p><%= item.description %></p>
-                      <p><strong>₹<%= item.price %></strong> × <%= item.quantity %> = ₹<%= item.total %></p>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Your Orders</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-gray-100 text-gray-800 min-h-screen">
+    <main class="max-w-6xl mx-auto px-4 py-10">
+      <h1 class="text-3xl font-bold mb-8 text-center">📦 Your Orders</h1>
+
+      <% if (orders.length === 0) { %>
+        <p class="text-center text-lg text-gray-600">No orders placed yet.</p>
+      <% } else { %>
+        <% orders.forEach(order => { %>
+          <div class="bg-white p-6 mb-6 rounded-2xl shadow-lg">
+            <p class="text-gray-500 text-sm mb-2">
+              <strong>Placed on:</strong> <%= new Date(order.createdAt).toLocaleString() %>
+            </p>
+
+            <% order.completedVendors.forEach(vendor => { %>
+              <div class="bg-gray-50 p-4 rounded-xl mb-4 border border-gray-200">
+                <h3 class="text-green-600 font-semibold text-lg mb-2">
+                  ✅ Status: <%= vendor.status %>
+                </h3>
+                <p class="text-sm text-gray-500 mb-4">
+                  <strong>Completed At:</strong> <%= new Date(vendor.completedAt).toLocaleString() %>
+                </p>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                  <% vendor.items.forEach(item => { %>
+                    <div class="bg-white border rounded-xl overflow-hidden shadow-sm hover:shadow-md transition p-3">
+                      <img src="<%= item.image %>" alt="<%= item.name %> image"
+                           class="w-full h-40 object-cover rounded-md mb-3" />
+                      <div class="space-y-1">
+                        <h4 class="text-lg font-semibold"><%= item.name %></h4>
+                        <p class="text-sm text-gray-600"><%= item.description %></p>
+                        <p class="text-sm font-medium">
+                          <strong>₹<%= item.price %></strong> × <%= item.quantity %> = ₹<%= item.total %>
+                        </p>
+                      </div>
                     </div>
-                  </div>
-                <% }); %>
+                  <% }); %>
+                </div>
               </div>
-            </div>
-          <% }); %>
-        </div>
-      <% }); %>
-    <% } %>
-  </main>
-  <a href="/">back to home</a>
-</body>
+            <% }); %>
+          </div>
+        <% }); %>
+      <% } %>
+    </main>
+
+    <div class="text-center pb-10">
+      <a href="/" class="inline-block mt-4 text-white bg-black px-6 py-2 rounded-lg hover:bg-blue-700 transition duration-300">
+        ⬅️ Back to Home
+      </a>
+    </div>
+  </body>
 </html>
-
-
