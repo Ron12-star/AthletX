@@ -178,7 +178,7 @@
                 </h3>
                 <p>
                   Price: <del style="text-decoration: line-through; color: gray;">₹ <%= product.price %></del>
-                  <strong style="color: green;">$<%= (product.price - (product.price * product.discount / 100)).toFixed(2) %></strong>
+                  <strong style="color: green;">₹<%= (product.price - (product.price * product.discount / 100)).toFixed(2) %></strong>
                 </p>
                 <p>
                   <%= product.details %>
@@ -238,13 +238,13 @@
                   <% if (product.discount> 0) { %>
                     <del style="text-decoration: line-through; color: gray;">₹ <%= product.price %></del>
                     <% } %>
-                      <strong style="color: green;">$<%= (product.price - (product.price * product.discount / 100)).toFixed(2) %></strong>
+                      <strong style="color: green;">₹<%= (product.price - (product.price * product.discount / 100)).toFixed(2) %></strong>
                 </p>
                 <p>
                   <%= product.details %>
                 </p>
                 <% if (product.discount> 0) { %>
-                  <p class="highlight">Discount: <%= product.discount %>%</p>
+                  <p class="highlight"> Discount: <%= product.discount %>%</p>
                   <% } %>
                     <button type="button" class="add-to-cart" data-productid="<%= product._id %>">Add to Cart</button>
                     <!-- ✅ Add to Wishlist Button -->
