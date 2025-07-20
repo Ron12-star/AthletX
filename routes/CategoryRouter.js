@@ -30,8 +30,8 @@ Router.get("/category/:category", async (req, res) => {
     const maxPrice = maxPriceProduct ? maxPriceProduct.price : 5000; // Default if no products
 
     //Always return maxPrice
-    if (req.xhr) {
-      return res.json({ products, maxPrice });
+   if (req.xhr) {
+      return res.render("productcard", { products });
     }
     res.render("category", {
         categoryName: category,
