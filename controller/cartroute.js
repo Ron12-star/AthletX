@@ -6,7 +6,6 @@ const addToCart = async (req, res) => {
   const mongoose = require("mongoose");
 
   try {
-    // console.log("Session User:", req.session.user);
     const userID = req.session.user._id;
     const { productId } = req.body;
     //check product id
@@ -16,8 +15,6 @@ const addToCart = async (req, res) => {
         .json({ success: false, message: "Product ID is required" });
     }
 
-    //print user and product id
-    //fetch from mongoDB compass
     const product = await ProductModel.findById(productId);
     if (!product) {
       return res
@@ -26,7 +23,6 @@ const addToCart = async (req, res) => {
     }
     console.log(" Product Details:", product);
 
-    //required fiels
     if (!product.name || !product.image || !product.details || !product.price) {
       return res.status(400).json({
         success: false,
@@ -40,24 +36,22 @@ const addToCart = async (req, res) => {
       });
     }
 
-    //find userCart from mongoDB compass
     let userCart = await CartModel.findOne({ userID: userID });
 
     if (!userCart) {
-      //create new cart
+
       userCart = new CartModel({
         userID,
         items: [],
         message: "your cart is empty",
       });
     }
-    //alredy if item exist in cart
+
     const productIndex = userCart.items.findIndex(
       (item) => item.productId.toString() === productId
     );
 
     if (productIndex > -1) {
-      //exist than increase by 1
       userCart.items[productIndex].quantity += 1;
     } else {
       //add item in cart
@@ -107,50 +101,55 @@ const getCart = async (req, res) => {
 const removeFromCart = async (req, res) => {
   try {
     if (!req.session || !req.session.user) {
-      return res
-        .status(401)
-        .json({ success: false, message: "User not logged in" });
+      return res.status(401).json({
+        success: false,
+        message: "User not logged in",
+      });
     }
 
     const userID = req.session.user._id;
-    const productId = req.params.productId;
-
-    console.log(
-      "🔍 Received request to remove Product ID:",
-      productId,
-      "for User ID:",
-      userID
-    ); // Debugging log
+    const productId = req.params.productId?.trim();
 
     let userCart = await CartModel.findOne({ userID });
 
     if (!userCart) {
-      console.log(" No cart found for user!");
-      return res
-        .status(404)
-        .json({ success: false, message: "Cart not found" });
+      return res.status(404).json({
+        success: false,
+        message: "Cart not found",
+      });
     }
 
-    const initialLength = userCart.items.length;
-    userCart.items = userCart.items.filter(
-      (item) => item.productId.toString() !== productId
+    const productIndex = userCart.items.findIndex(
+      (item) => item.productId.toString() === productId
     );
-    const finalLength = userCart.items.length;
 
-    if (initialLength === finalLength) {
-      console.log(" Item not found in cart!");
-      return res
-        .status(404)
-        .json({ success: false, message: "Item not found in cart" });
+    if (productIndex === -1) {
+      return res.status(404).json({
+        success: false,
+        message: "Item not found in cart",
+      });
     }
+    userCart.items.splice(productIndex, 1);
 
     await userCart.save();
-    console.log(" Item removed successfully from cart!");
+    const totalPrice = userCart.items.reduce(
+      (sum, item) =>
+        sum + item.price * item.quantity * (1 - item.discount / 100),
+      0
+    );
 
-    res.json({ success: true, message: "Item removed from cart" });
+    return res.json({
+      success: true,
+      message: "Item removed successfully",
+      totalPrice,
+    });
+
   } catch (error) {
-    console.error(" Error removing item from cart:", error);
-    res.status(500).json({ success: false, message: "Internal server error" });
+    console.error("Error removing item from cart:", error);
+    return res.status(500).json({
+      success: false,
+      message: "Internal server error",
+    });
   }
 };
 const updateCart = async (req, res) => {
