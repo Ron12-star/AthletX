@@ -6,46 +6,105 @@ const Product = require("../models/productschema");
 Router.get("/category/:category", async (req, res) => {
   try {
     const category = req.params.category;
-    const filters = { category };
+   const minPriceQuery = parseInt(req.query.minPrice);
+const maxPriceQuery = parseInt(req.query.maxPrice);
 
-    // Apply subcategory filter 
+    let pipeline = [];
+
+    // 1️⃣ Match category
+    pipeline.push({
+      $match: { category }
+    });
+
+    // 2️⃣ Apply subcategory filter
     if (req.query.subcategory) {
-        filters.subcategory = { $in: req.query.subcategory.split(",") };
+      pipeline.push({
+        $match: {
+          subcategory: { $in: req.query.subcategory.split(",") }
+        }
+      });
     }
 
-    // price filter is applied correctly???
-    if (req.query.minPrice && req.query.maxPrice) {
-        filters.price = {
-            $gte: parseInt(req.query.minPrice, 10),
-            $lte: parseInt(req.query.maxPrice, 10),
-        };
+    // 3️⃣ Add discounted price field
+    pipeline.push({
+      $addFields: {
+        finalPrice: {
+          $subtract: [
+            "$price",
+            {
+              $multiply: [
+                "$price",
+                { $divide: ["$discount", 100] }
+              ]
+            }
+          ]
+        }
+      }
+    });
+
+    // 4️⃣ Filter using discounted price
+    if (!isNaN(minPriceQuery) && !isNaN(maxPriceQuery)) {
+      pipeline.push({
+        $match: {
+          finalPrice: {
+            $gte: minPriceQuery,
+            $lte: maxPriceQuery
+          }
+        }
+      });
     }
 
-    // Fetch products by category and filters
-    const products = await Product.find(filters);
+    // 5️⃣ Get products
+    const products = await Product.aggregate(pipeline);
+
+    // 6️⃣ Keep other logic same
     const bestsellerProducts = await Product.find({ category, bestseller: true });
     const subcategories = await Product.distinct("subcategory", { category });
 
-    const maxPriceProduct = await Product.findOne({ category }).sort({ price: -1 });
-    const maxPrice = maxPriceProduct ? maxPriceProduct.price : 5000; // Default if no products
+    // 🔥 IMPORTANT: maxPrice must also be based on discounted price
+    const maxPriceProduct = await Product.aggregate([
+      { $match: { category } },
+      {
+        $addFields: {
+          finalPrice: {
+            $subtract: [
+              "$price",
+              {
+                $multiply: [
+                  "$price",
+                  { $divide: ["$discount", 100] }
+                ]
+              }
+            ]
+          }
+        }
+      },
+      { $sort: { finalPrice: -1 } },
+      { $limit: 1 }
+    ]);
 
-    //Always return maxPrice
-   if (req.xhr) {
+    const maxPrice = maxPriceProduct.length > 0
+      ? maxPriceProduct[0].finalPrice
+      : 5000;
+
+    // 7️⃣ AJAX response
+    if (req.xhr) {
       return res.render("productcard", { products });
     }
+
     res.render("category", {
-        categoryName: category,
-        products,
-        subcategories,
-        bestsellerProducts,
-        maxPrice,
-        isSearchPage: false,
+      categoryName: category,
+      products,
+      subcategories,
+      bestsellerProducts,
+      maxPrice,
+      isSearchPage: false,
     });
 
-} catch (err) {
+  } catch (err) {
     console.error("Error loading category:", err);
     res.status(500).send("Error loading category");
-}
+  }
 });
 
 

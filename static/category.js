@@ -1,5 +1,3 @@
-
-
 document.addEventListener("DOMContentLoaded", function () {
   const searchInput = document.getElementById("subcategorySearch");
   const searchButton = document.getElementById("subcategorySearchBtn");
@@ -13,61 +11,63 @@ document.addEventListener("DOMContentLoaded", function () {
   );
   const productContainer = document.getElementById("all-products");
 
+  // ================= FILTER FUNCTION =================
   function applyFilters() {
-  let minPrice = minPriceInput.value;
-  let maxPrice = maxPriceInput.value;
+    let minPrice = minPriceInput.value;
+    let maxPrice = maxPriceInput.value;
 
-  // Get selected subcategories
-  let selectedSubcategories = [];
-  subcategoryCheckboxes.forEach((checkbox) => {
-    if (checkbox.checked) {
-      selectedSubcategories.push(checkbox.value);
+    let selectedSubcategories = [];
+    subcategoryCheckboxes.forEach((checkbox) => {
+      if (checkbox.checked) {
+        selectedSubcategories.push(checkbox.value);
+      }
+    });
+
+    const params = new URLSearchParams();
+    params.append("minPrice", minPrice);
+    params.append("maxPrice", maxPrice);
+    if (selectedSubcategories.length > 0) {
+      params.append("subcategory", selectedSubcategories.join(","));
     }
-  });
 
-  // Construct query parameters
-  const params = new URLSearchParams();
-  params.append("minPrice", minPrice);
-  params.append("maxPrice", maxPrice);
-  if (selectedSubcategories.length > 0) {
-    params.append("subcategory", selectedSubcategories.join(","));
+    productContainer.style.opacity = "0.5";
+
+    fetch(`${window.location.pathname}?${params.toString()}`, {
+      method: "GET",
+      headers: { "X-Requested-With": "XMLHttpRequest" },
+    })
+      .then((response) => response.text())
+      .then((html) => {
+        productContainer.innerHTML = html;
+        productContainer.style.opacity = "1";
+
+        // 🔥 IMPORTANT: reattach add to cart events after filtering
+        attachAddToCartEvents();
+      })
+      .catch((error) => {
+        console.error("Error fetching filtered products:", error);
+      });
   }
 
-  //  Smooth opacity effect instead of full reload
-  productContainer.style.opacity = "0.5";
+  // ================= PRICE EVENTS =================
+  minPriceSlider.addEventListener("input", () => {
+    minPriceInput.value = minPriceSlider.value;
+    applyFilters();
+  });
 
-  //  Fetch filtered products as HTML (not JSON!)
-  fetch(`${window.location.pathname}?${params.toString()}`, {
-    method: "GET",
-    headers: { "X-Requested-With": "XMLHttpRequest" },
-  })
-    .then((response) => response.text()) // ← CHANGED: parse response as HTML
-    .then((html) => {
-      productContainer.innerHTML = html; // ← Inject HTML directly
-      productContainer.style.opacity = "1";
-    })
-    .catch((error) => {
-      console.error("Error fetching filtered products:", error);
-    });
-}
+  maxPriceSlider.addEventListener("input", () => {
+    maxPriceInput.value = maxPriceSlider.value;
+    applyFilters();
+  });
 
-// Event listeners
-minPriceSlider.addEventListener("input", () => {
-  minPriceInput.value = minPriceSlider.value;
-  applyFilters();
-});
-maxPriceSlider.addEventListener("input", () => {
-  maxPriceInput.value = maxPriceSlider.value;
-  applyFilters();
-});
-minPriceInput.addEventListener("change", applyFilters);
-maxPriceInput.addEventListener("change", applyFilters);
+  minPriceInput.addEventListener("change", applyFilters);
+  maxPriceInput.addEventListener("change", applyFilters);
 
-  
   subcategoryCheckboxes.forEach((checkbox) => {
     checkbox.addEventListener("change", applyFilters);
   });
 
+  // ================= SUBCATEGORY SEARCH =================
   function filterSubcategories() {
     const searchTerm = searchInput.value.toLowerCase();
     const labels = subcategoryList.querySelectorAll("label");
@@ -78,41 +78,45 @@ maxPriceInput.addEventListener("change", applyFilters);
     });
   }
 
-  // Event listeners
   searchInput.addEventListener("input", filterSubcategories);
-  searchButton.addEventListener("click", filterSubcategories);
+  searchButton?.addEventListener("click", filterSubcategories);
+
+  // Attach cart events on page load
+  attachAddToCartEvents();
 });
 
-//add to cart function
 
-document.addEventListener("DOMContentLoaded", () => {
+// ================= ADD TO CART =================
+function attachAddToCartEvents() {
   document.querySelectorAll(".add-to-cart").forEach((button) => {
     button.addEventListener("click", function () {
       const productId = this.getAttribute("data-productid");
       addToCart(productId);
     });
   });
-});
+}
 
 async function addToCart(productId) {
-  console.log("Attempting to add product to cart. Product ID:", productId);
   try {
     const sessionResponse = await fetch("/session-status");
     const sessionData = await sessionResponse.json();
 
     if (!sessionData.loggedIn) {
-      alert("Please log in first222222222222227777777222222!");
-      window.location.href = "/login"; // Redirect to login page
+      alert("Please log in first!");
+      window.location.href = "/login";
       return;
     }
-    const response = await fetch("/add-to-cart", {
+
+    const response = await fetch(`/add-to-cart`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ productId }),
     });
+
     const data = await response.json();
+
     if (data.success) {
-      alert("Product added to cart1");
+      alert("Product added to cart!");
     } else {
       alert("Error adding to cart.");
     }
