@@ -33,7 +33,6 @@ const Login = async (req, res) => {
         window.location.href="/Login";
         </script>
         `);
-      alert("password did not match");
     }
 
 

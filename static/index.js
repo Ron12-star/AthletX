@@ -31,7 +31,9 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   // Initialize product sliders
+ 
   setupProductSlider("lowDiscountContainer");
+  setupProductSlider("highDiscountContainer");
   // Initialize both carousels
   setupCarouselSlider(".carousel-container");
 });
@@ -189,23 +191,22 @@ function setupCarouselSlider(selector) {
 
 // Function for product sliders (high & low discount)
 function setupProductSlider(containerId) {
-  const container = document.querySelector(`#${containerId} .product-slider`);
-  const wrapper = document.querySelector(`#${containerId} .scroll-wrapper`);
 
-  if (!container || !wrapper) return;
+  const mainContainer = document.getElementById(containerId);
+  if (!mainContainer) return;
 
-  const scrollLeftBtn = document.querySelector(
-    `.scroll-btn.scroll-left[data-target="product_list"]`
-  );
-  const scrollRightBtn = document.querySelector(
-    `.scroll-btn.scroll-right[data-target="product_list"]`
-  );
+  const container = mainContainer.querySelector(".product-slider");
+  const wrapper = mainContainer.querySelector(".scroll-wrapper");
+  const scrollLeftBtn = mainContainer.querySelector(".scroll-btn.scroll-left");
+  const scrollRightBtn = mainContainer.querySelector(".scroll-btn.scroll-right");
 
-  if (!scrollLeftBtn || !scrollRightBtn) return;
+  if (!container || !wrapper || !scrollLeftBtn || !scrollRightBtn) return;
 
   let scrollAmount = 0;
+
   const cardWidth =
     container.querySelector(".product-card")?.offsetWidth || 250;
+
   const totalCards = container.children.length;
   const visibleCards = Math.floor(wrapper.offsetWidth / cardWidth);
   const maxScroll = Math.max(0, (totalCards - visibleCards) * cardWidth);

@@ -167,7 +167,7 @@
 
       <button class="scroll-btn scroll-left" data-target="discount_list">&#10094;</button>
 
-      <div id="discount_list" class="scroll-wrapper">
+      <div id="product_list" class="scroll-wrapper">
         <div class="product-slider">
           <% if (HighDiscountProducts && HighDiscountProducts.length> 0) { %>
             <% HighDiscountProducts.forEach(product=> { %>
@@ -185,6 +185,10 @@
                 </p>
                 <p class="highlight">Discount: <%= product.discount %>%</p>
                 <button class="add-to-cart" data-productid="<%= product._id %>">Add to Cart</button>
+                 <form action="/Wishlist" method="POST" style="display:inline;">
+                       <input type="hidden" name="productId" value="<%= product._id %>" />
+                      <button type="submit" class="wishlist-btn">Add to Wishlist</button>
+                    </form>
               </div>
               <% }) %>
                 <% } else { %>
