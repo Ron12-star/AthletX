@@ -1,27 +1,29 @@
-const express = require("express");
-const path = require("path");
-const connectDB = require("./Database/DB.js");
-const bodyParser = require("body-parser");
-const session = require("express-session");
+const express = require("express");// Main framework to build web app and apis
+const path = require("path");//Built in nodej module to handle file and directory path
+const connectDB = require("./Database/DB.js");//custom function that help to connect with database
+const session = require("express-session");//middleware to store user session(used for authentication and cart)
+
+//built in function
 const authRouter = require("./routes/authRouter.js");
 const vendorRouter=require("./routes/vendorRouter.js");
 const CartRouter=require("./routes/cartRouter.js");
 const WishListRouter=require("./routes/WishlistRouter.js");
 const CategoryRouter=require("./routes/CategoryRouter.js");
 const OrderRouter=require('./routes/OrderRoutes.js');
-const app = express();
-require("dotenv").config();
 
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
+const app = express(); //express application
+require("dotenv").config(); //load environment variables
+
+app.use(express.urlencoded({ extended: true })); //parses form data
+app.use(express.json());//parses json data
 
 
 //session middleware
 app.use(
   session({
-    secret:  process.env.SESSION_SECRET,
-    resave: false,
-    saveUninitialized: false,
+    secret:  process.env.SESSION_SECRET, //encryption key for session
+    resave: false, //prevent resaving session if nothing change in session
+    saveUninitialized: false, //prevent saving empty session
     cookie: { secure: false,maxAge:24*60*60*1000 },
     
   })
@@ -37,10 +39,13 @@ app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
 
+
+
+
+
+
 //connection with mongoDB
 connectDB();
-
-
 //Routes
 app.use("/", authRouter);
 app.use("/vendor-dashboard",vendorRouter);
@@ -48,7 +53,6 @@ app.use("/add-to-cart",CartRouter);
 app.use("/Wishlist",WishListRouter)
 app.use("/",CategoryRouter);
 app.use("/",OrderRouter);
-// Dummy products (Replace with real database)
 const products = {
   WinterCollection: [
       { name: "Winter Jacket", image: "/images/winter-jacket.jpg", details: "Warm and cozy", price: 1999, discount: 10 },

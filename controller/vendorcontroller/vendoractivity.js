@@ -15,9 +15,8 @@ const AddItems = async (req, res) => {
       category,
       subcategory,
     } = req.body;
-    console.log("🧾 req.file:", image );
-    console.log("📦 req.body:", req.body);
-
+    console.log(" req.file:", image );
+    console.log(" req.body:", req.body);
     if (
       !image ||
       !name ||
@@ -61,7 +60,7 @@ const AddItems = async (req, res) => {
     await newProduct.save();
     res.status(201).json(newProduct);
   } catch (err) {
-    console.error("❌ Error adding product:", err);
+    console.error(" Error adding product:", err);
     res.status(500).json({ error: "Failed to add product" });
   }
 };
@@ -184,7 +183,7 @@ const getPendingOrders = async (req, res) => {
       vendorId: req.session.user._id,
     });
   } catch (error) {
-    console.error("❌ Error fetching pending orders:", error);
+    console.error(" Error fetching pending orders:", error);
     res.status(500).send("Error fetching pending orders");
   }
 };
@@ -192,12 +191,12 @@ const completeOrder = async (req, res) => {
   try {
     const orderId = req.body.orderId;
     const vendorId = req.session.user._id;
-    console.log("🔎 Received orderId:", req.body.orderId);
+    console.log(" Received orderId:", req.body.orderId);
 
     if (!mongoose.Types.ObjectId.isValid(orderId)) {
       return res.status(400).send("Invalid Order ID");
     }
-    // 🔍 Find the order with the vendor in the vendors array
+    //  Find the order with the vendor in the vendors array
     const order = await Order.findOne({
       _id: orderId,
       "vendors.vendorId": vendorId,
@@ -207,7 +206,7 @@ const completeOrder = async (req, res) => {
       return res.status(404).send("Order not found");
     }
 
-    // 🎯 Find the correct vendor section inside the vendors array
+    //  Find the correct vendor section inside the vendors array
     const vendorSection = order.vendors.find(
       (v) => v.vendorId.toString() === vendorId.toString()
     );
@@ -222,7 +221,7 @@ const completeOrder = async (req, res) => {
       return res.status(400).send("Order already completed by this vendor");
     }
 
-    // ✅ Update only this vendor’s status
+    //  Update only this vendor’s status
     vendorSection.status = "Completed";
     vendorSection.completedAt = new Date();
 
@@ -230,7 +229,7 @@ const completeOrder = async (req, res) => {
 
     res.redirect("vendorcomplete");
   } catch (error) {
-    console.error("❌ Error completing order:", error);
+    console.error(" Error completing order:", error);
     res.status(500).send("Error completing order11111111111111111111111111111");
   }
 };

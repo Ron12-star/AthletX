@@ -30,7 +30,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const response = await fetch("http://localhost:7777/vendor-dashboard/add", {
           method: "POST",
           body: formData,
-          credentials: "include", // ✅ if using session
+          credentials: "include", //  if using session
         });
 
         const result = await response.json();

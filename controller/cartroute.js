@@ -17,7 +17,6 @@ const addToCart = async (req, res) => {
     }
 
     //print user and product id
-    // console.log("✅ User ID:", userID, "✅ Product ID:", productId);
     //fetch from mongoDB compass
     const product = await ProductModel.findById(productId);
     if (!product) {
@@ -126,7 +125,7 @@ const removeFromCart = async (req, res) => {
     let userCart = await CartModel.findOne({ userID });
 
     if (!userCart) {
-      console.log("❌ No cart found for user!");
+      console.log(" No cart found for user!");
       return res
         .status(404)
         .json({ success: false, message: "Cart not found" });
@@ -139,18 +138,18 @@ const removeFromCart = async (req, res) => {
     const finalLength = userCart.items.length;
 
     if (initialLength === finalLength) {
-      console.log("❌ Item not found in cart!");
+      console.log(" Item not found in cart!");
       return res
         .status(404)
         .json({ success: false, message: "Item not found in cart" });
     }
 
     await userCart.save();
-    console.log("✅ Item removed successfully from cart!");
+    console.log(" Item removed successfully from cart!");
 
     res.json({ success: true, message: "Item removed from cart" });
   } catch (error) {
-    console.error("❌ Error removing item from cart:", error);
+    console.error(" Error removing item from cart:", error);
     res.status(500).json({ success: false, message: "Internal server error" });
   }
 };

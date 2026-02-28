@@ -1,10 +1,10 @@
 document.addEventListener("click", async (event) => {
-    const target = event.target; // Ensure `target` is defined
+    const target = event.target; 
 
-    // 🛑 Remove Item from Cart
+    //  Remove Item from Cart
     if (target.classList.contains("remove-btn")) {
         const productId = target.dataset.productid;
-        console.log("🛑 Remove button clicked for Product ID:", productId);
+        console.log(" Remove button clicked for Product ID:", productId);
 
         try {
             const response = await fetch(`/add-to-cart/${productId}`, { method: "DELETE" });
@@ -33,28 +33,28 @@ document.addEventListener("click", async (event) => {
     }
 });
 
-// ✅ Function to Update Quantity Instantly
+//  Function to Update Quantity Instantly
 async function updateQuantity(button, change) {
     if (!button) return; // Prevent error if button is undefined
     const productId = button.dataset.productid;
 
     if (!productId) {
-        console.error("❌ Product ID is missing from the button dataset.");
+        console.error(" Product ID is missing from the button dataset.");
         return;
     }
 
     const quantityElement = document.getElementById(`quantity-${productId}`);
     const itemTotalElement = document.getElementById(`total-item-price-${productId}`);
 
-    // 🛑 Ensure the element exists before using `innerText`
+    //  Ensure the element exists before using `innerText`
     if (!quantityElement) {
-        console.error(`❌ Element with ID 'quantity-${productId}' not found in the DOM.`);
+        console.error(` Element with ID 'quantity-${productId}' not found in the DOM.`);
         return;
     }
 
     let quantity = parseInt(quantityElement.innerText);
     if (isNaN(quantity)) {
-        console.error(`❌ Invalid quantity value for product ${productId}.`);
+        console.error(`Invalid quantity value for product ${productId}.`);
         return;
     }
 
@@ -77,7 +77,7 @@ async function updateQuantity(button, change) {
                 const discount = parseFloat(itemTotalElement.dataset.discount);
                 itemTotalElement.innerText = `Total: $${(newQuantity * price * (1 - discount / 100)).toFixed(2)}`;
             } else {
-                console.error(`❌ Element with ID 'total-item-price-${productId}' not found.`);
+                console.error(` Element with ID 'total-item-price-${productId}' not found.`);
             }
             updateTotalPrice();
         }
@@ -93,7 +93,7 @@ async function updateQuantity(button, change) {
     }
 }
 
-// ✅ Function to Update Total Price Instantly
+//  Function to Update Total Price Instantly
 function updateTotalPrice() {
     let total = 0;
     document.querySelectorAll(".cart-item").forEach(item => {
@@ -101,7 +101,7 @@ function updateTotalPrice() {
         const priceElement = item.querySelector("[data-price]");
         const discountElement = item.querySelector("[data-discount]");
         if (!quantityElement || !priceElement || !discountElement) {
-            console.error("❌ Missing elements inside .cart-item", item);
+            console.error(" Missing elements inside .cart-item", item);
             return;
         }
         const quantity = parseInt(quantityElement.innerText);
@@ -114,18 +114,18 @@ function updateTotalPrice() {
         if (totalItemPriceElement) {
             totalItemPriceElement.innerText = `Total: $${itemTotal.toFixed(2)}`;
         } else {
-            console.error("❌ totalItemPriceElement not found inside .cart-item", item);
+            console.error(" totalItemPriceElement not found inside .cart-item", item);
         }
 
         total += itemTotal;
     });
 
-    // ✅ Ensure the total price element exists
+    //  Ensure the total price element exists
     const totalPriceElement = document.getElementById("total-price");
     if (totalPriceElement) {
         totalPriceElement.innerText = total.toFixed(2);
     } else {
-        console.error("❌ Total price element not found in the DOM.");
+        console.error(" Total price element not found in the DOM.");
     }
 }
 

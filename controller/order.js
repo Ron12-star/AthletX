@@ -55,7 +55,7 @@ const placeorder = async (req, res) => {
       return res.status(404).json({ message: "User not found" });
     }
 
-    // 🧾 Group items by vendor
+    //  Group items by vendor
     const vendorMap = {}; // { vendorId: [items...] }
     let totalAmount = 0;
 
@@ -79,14 +79,14 @@ const placeorder = async (req, res) => {
       vendorMap[vendorId].push(itemData);
     }
 
-    // 📦 Build vendors array
+    //  Build vendors array
     const vendors = Object.entries(vendorMap).map(([vendorId, items]) => ({
       vendorId,
       items,
       status: "Pending"
     }));
 
-    // 💾 Create one single multi-vendor order
+    //  Create one single multi-vendor order
     const newOrder = new Order({
       userId,
       name,
@@ -99,17 +99,17 @@ const placeorder = async (req, res) => {
 
     await newOrder.save();
 
-    // ✅ Clear cart
+    //  Clear cart
     await Cart.deleteOne({ userID: userId });
 
-    // 🟢 Show a pending message to user
+
     // res.redirect("latest-order");
 
     req.session.latestOrderId = newOrder._id;
 res.redirect("/order-status");
 
   } catch (error) {
-    console.error("❌ Error placing order:", error);
+    console.error(" Error placing order:", error);
     res.status(500).send("Error placing order");
   }
 };
@@ -121,7 +121,7 @@ const getOrderStatus = async (req, res) => {
 
     const userId = req.session.user._id;
 
-    // 🆕 Find the most recent order by this user
+    //  Find the most recent order by this user
     const order = await Order.findOne({ userId })
       .sort({ createdAt: -1 })
       .limit(1);
@@ -139,7 +139,7 @@ const getOrderStatus = async (req, res) => {
       return res.render("userorder-panding", { order });
     }
   } catch (error) {
-    console.error("❌ Error in getOrderStatus:", error);
+    console.error(" Error in getOrderStatus:", error);
     res.status(500).send("Error checking order status");
   }
 };
@@ -195,7 +195,7 @@ const getUserOrdersWithStatus = async (req, res) => {
     res.render("userorder-confirmation", { orders: [confirmedOrder] });
 
   } catch (error) {
-    console.error("❌ Error fetching user orders:", error);
+    console.error(" Error fetching user orders:", error);
     res.status(500).send("Error fetching orders");
   }
 };

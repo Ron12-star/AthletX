@@ -21,7 +21,7 @@ const updateProfile = async (req, res) => {
       const cloudinaryRes = await cloudinary.uploader.upload(req.file.path, {
         folder: "athletex/profiles",
       });
-      user.image = cloudinaryRes.secure_url; // ✅ Only save the URL
+      user.image = cloudinaryRes.secure_url; // Only save the URL
     }
     console.log("Received file:", req.file); 
     if (req.file && req.file.path) {

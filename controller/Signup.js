@@ -12,7 +12,7 @@ const signup = async (req, res) => {
     console.log("passowrd ",password)
     console.log("type of password",typeof password);
     const hashedPassword = await bcrypt.hash(String(password), 10); // Hash password
-    console.log("🔐 Hashed password to store:", hashedPassword);
+    console.log(" Hashed password to store:", hashedPassword);
 
     const newUser = new User({
       email,

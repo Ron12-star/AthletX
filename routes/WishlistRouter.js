@@ -7,5 +7,4 @@ Router.get("/",isUserLoggedIn,getWishlist);
 Router.post("/",isUserLoggedIn,addToWishList);
 Router.post("/add-to-cart", isUserLoggedIn, moveToCart);
 Router.delete("/remove/:productId",isUserLoggedIn,removeFromWishlist);
-
 module.exports=Router;

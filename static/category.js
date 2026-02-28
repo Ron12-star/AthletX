@@ -1,12 +1,4 @@
-// document.getElementById("category-search").addEventListener("input", function() {
-//   let searchValue = this.value.toLowerCase();
-//   let items = document.querySelectorAll("#category-list li");
 
-//   items.forEach(item => {
-//       let text = item.textContent.toLowerCase();
-//       item.style.display = text.includes(searchValue) ? "block" : "none";
-//   });
-// });
 
 document.addEventListener("DOMContentLoaded", function () {
   const searchInput = document.getElementById("subcategorySearch");
@@ -41,10 +33,10 @@ document.addEventListener("DOMContentLoaded", function () {
     params.append("subcategory", selectedSubcategories.join(","));
   }
 
-  // ✅ Smooth opacity effect instead of full reload
+  //  Smooth opacity effect instead of full reload
   productContainer.style.opacity = "0.5";
 
-  // ✅ Fetch filtered products as HTML (not JSON!)
+  //  Fetch filtered products as HTML (not JSON!)
   fetch(`${window.location.pathname}?${params.toString()}`, {
     method: "GET",
     headers: { "X-Requested-With": "XMLHttpRequest" },

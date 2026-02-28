@@ -9,11 +9,13 @@ const Login = async (req, res) => {
     if (!user) return res.status(400).send("Invalid credentials")
 
     if (!role || user.role.toLowerCase() !== role.toLowerCase()) {
-      console.log("reached inside")
-      return res.status(400).json({
-        success: false,
-        message: "Invalid role",
-      });
+      console.log("reached inside");
+      return res.send(`
+        <script>
+        alert('Invalid credential');
+        window.location.href="/Login";
+        </script>
+        `);
     }
     console.log('reached here');
     console.log("Entered password:", password);
