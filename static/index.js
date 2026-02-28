@@ -91,69 +91,74 @@ async function addToWishlist(productId) {
 }
 
 // Setup Scrollable Product Sliders
-function setupSlider(containerId) {
-  const container = document.querySelector(`#${containerId} .product-slider`);
-  if (!container) {
-    console.warn(`Slider container not found for ${containerId}`);
-    return;
-  }
+// function setupSlider(containerId) {
+//   const container = document.querySelector(`#${containerId} .product-slider`);
+//   if (!container) {
+//     console.warn(`Slider container not found for ${containerId}`);
+//     return;
+//   }
 
-  const scrollLeftBtn = document.querySelector(
-    `.scroll-left[data-target="${containerId}"]`
-  );
-  const scrollRightBtn = document.querySelector(
-    `.scroll-right[data-target="${containerId}"]`
-  );
+//   const scrollLeftBtn = document.querySelector(
+//     `.scroll-left[data-target="${containerId}"]`
+//   );
+//   const scrollRightBtn = document.querySelector(
+//     `.scroll-right[data-target="${containerId}"]`
+//   );
 
-  if (!scrollLeftBtn || !scrollRightBtn) {
-    console.warn(`Scroll buttons missing for ${containerId}`);
-    return;
-  }
+//   if (!scrollLeftBtn || !scrollRightBtn) {
+//     console.warn(`Scroll buttons missing for ${containerId}`);
+//     return;
+//   }
 
-  let scrollAmount = 0;
-  const cardWidth = 240;
-  const visibleCards = 4;
-  const totalCards = container.children.length;
-  const maxScroll = (totalCards - visibleCards) * cardWidth;
+//   let scrollAmount = 0;
+//   const cardWidth = 240;
+//   const visibleCards = 4;
+//   const totalCards = container.children.length;
+//   const maxScroll = (totalCards - visibleCards) * cardWidth;
 
-  scrollLeftBtn.addEventListener("click", function () {
-    if (scrollAmount > 0) {
-      scrollAmount -= cardWidth;
-      container.style.transform = `translateX(-${scrollAmount}px)`;
-    }
-  });
+//   scrollLeftBtn.addEventListener("click", function () {
+//     if (scrollAmount > 0) {
+//       scrollAmount -= cardWidth;
+//       container.style.transform = `translateX(-${scrollAmount}px)`;
+//     }
+//   });
 
-  scrollRightBtn.addEventListener("click", function () {
-    if (scrollAmount < maxScroll) {
-      scrollAmount += cardWidth;
-      container.style.transform = `translateX(-${scrollAmount}px)`;
-    }
-  });
-}
+//   scrollRightBtn.addEventListener("click", function () {
+//     if (scrollAmount < maxScroll) {
+//       scrollAmount += cardWidth;
+//       container.style.transform = `translateX(-${scrollAmount}px)`;
+//     }
+//   });
+// }
 
-// Scroll Function for Product Containers
-function scroll(direction, containerId) {
-  const container = document.getElementById(containerId);
-  if (!container) return;
+// // Scroll Function for Product Containers
+// function scroll(direction, containerId) {
+//   const container = document.getElementById(containerId);
+//   if (!container) return;
 
-  container.scrollBy({
-    left: direction === "left" ? -300 : 300,
-    behavior: "smooth",
-  });
-}
+//   container.scrollBy({
+//     left: direction === "left" ? -300 : 300,
+//     behavior: "smooth",
+//   });
+// }
 
 // Toggle Product View (Expand/Collapse)
 function toggleView(containerId, buttonId) {
   const wrapper = document.getElementById(containerId);
   const slider = wrapper.querySelector(".product-slider");
   const button = document.getElementById(buttonId);
-
+  const scrollLeftBtn = wrapper.querySelector(".scroll-left");
+  const scrollRightBtn = wrapper.querySelector(".scroll-right");
   if (!wrapper || !slider || !button) return;
 
   wrapper.classList.toggle("expanded");
+  const isExpanded = wrapper.classList.contains("expanded");
   slider.style.flexWrap = wrapper.classList.contains("expanded")
     ? "wrap"
     : "nowrap";
+  slider.style.transform = "translateX(0px)";
+  if (scrollLeftBtn) scrollLeftBtn.style.display = isExpanded ? "none" : "block";
+  if (scrollRightBtn) scrollRightBtn.style.display = isExpanded ? "none" : "block";
   button.innerText = wrapper.classList.contains("expanded")
     ? "Collapse View"
     : "Show All Products";
