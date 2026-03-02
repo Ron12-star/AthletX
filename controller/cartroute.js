@@ -118,7 +118,6 @@ const removeFromCart = async (req, res) => {
         message: "Cart not found",
       });
     }
-
     const productIndex = userCart.items.findIndex(
       (item) => item.productId.toString() === productId
     );

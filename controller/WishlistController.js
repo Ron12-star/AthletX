@@ -121,9 +121,9 @@ const removeFromWishlist = async (req, res) => {
     console.log("ProductId to remove:", productId.toString());
     const initialLength = wishList.items.length;
 
-    // Remove the product from wishlist
+    //Remove the product from wishlist
     wishList.items = wishList.items.filter(
-      (item) => item.productId.equals(productId) === false // ✅ Correct way to compare ObjectId
+      (item) => item.productId.equals(productId) === false //compare ObjectId
     );
     console.log("Wishlist items after removal:", wishList.items.map(item => item.productId.toString()));
     // If no item was removed, product was not found in wishlist

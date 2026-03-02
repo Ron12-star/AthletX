@@ -6,7 +6,7 @@ const storage = multer.diskStorage({
     cb(null, path.join(__dirname, "../public/Images"));
   },
  filename: (req, file, cb) => {
-  cb(null, file.originalname); // ✅ Just the original name, no timestamp
+  cb(null, file.originalname); 
 }
 });
 
