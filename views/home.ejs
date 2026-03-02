@@ -242,8 +242,7 @@
                 <% if (product.discount> 0) { %>
                   <p class="highlight"> Discount: <%= product.discount %>%</p>
                   <% } %>
-                    <button type="button" class="add-to-cart" data-productid="<%= product._id %>">Add to Cart</button>
-                    <!-- ✅ Add to Wishlist Button -->
+                    <button type="button" class="add-to-cart" data-productid="<%= product._id %>">Add to Cart</button>    
                     <form action="/Wishlist" method="POST" style="display:inline;">
                        <input type="hidden" name="productId" value="<%= product._id %>" />
                       <button type="submit" class="wishlist-btn">Add to Wishlist</button>

@@ -41,7 +41,7 @@ document.addEventListener("DOMContentLoaded", function () {
         productContainer.innerHTML = html;
         productContainer.style.opacity = "1";
 
-        // 🔥 IMPORTANT: reattach add to cart events after filtering
+        //IMPORTANT: reattach add to cart events after filtering
         attachAddToCartEvents();
       })
       .catch((error) => {

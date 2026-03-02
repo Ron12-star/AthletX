@@ -21,17 +21,17 @@ const updateProfile = async (req, res) => {
       const cloudinaryRes = await cloudinary.uploader.upload(req.file.path, {
         folder: "athletex/profiles",
       });
-      user.image = cloudinaryRes.secure_url; // Only save the URL
+      user.image = cloudinaryRes.secure_url; 
     }
     console.log("Received file:", req.file); 
     if (req.file && req.file.path) {
-      console.log("Uploading to Cloudinary:", req.file.path); // <-- Add this
+      console.log("Uploading to Cloudinary:", req.file.path); 
 
       const cloudinaryRes = await cloudinary.uploader.upload(req.file.path, {
         folder: "athletex/profiles",
       });
 
-      console.log("Cloudinary response:", cloudinaryRes); // <-- Add this
+      console.log("Cloudinary response:", cloudinaryRes); 
 
       user.image = cloudinaryRes.secure_url;
     }
@@ -43,7 +43,7 @@ const updateProfile = async (req, res) => {
     console.log("Profile updated:", userWithoutPassword);
     res.redirect("/profile");
   } catch (err) {
-  console.error("Update Profile Error:", err); // See full error in console
+  console.error("Update Profile Error:", err);
   res.status(500).send(`<pre>${JSON.stringify(err, null, 2)}</pre>`);
 }
 

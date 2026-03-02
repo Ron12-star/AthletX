@@ -14,7 +14,6 @@ const addToCart = async (req, res) => {
         .status(400)
         .json({ success: false, message: "Product ID is required" });
     }
-
     const product = await ProductModel.findById(productId);
     if (!product) {
       return res
@@ -66,7 +65,6 @@ const addToCart = async (req, res) => {
         discount: product.discount,
       });
     }
-
     await userCart.save();
     res.json({ success: true, message: "Product added to cart!" });
   } catch (error) {
